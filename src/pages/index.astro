@@ -1,0 +1,391 @@
+---
+import '../styles/global.css';
+
+const points = [
+  {
+    num: "01",
+    title: "AI-optimised websites are the new SEO.",
+    body: "Your website isn't just being read by Google anymore. ChatGPT, Claude, Perplexity, and Gemini are scraping it to answer questions about your industry. If your site isn't structured for AI to understand and quote you, your competitors are getting recommended instead. Most businesses don't even know this is happening."
+  },
+  {
+    num: "02",
+    title: "Being sceptical on AI is like laughing at the first cars.",
+    body: "Every disruptive technology had loud sceptics who looked smart for about 18 months and then looked foolish for the next 50 years. Ignoring AI doesn't make it go away. It just means you adapt later, more painfully, and from behind."
+  },
+  {
+    num: "03",
+    title: "Australia's demographic problem is your competitive opportunity.",
+    body: "The biggest issue facing small business owners isn't tech or marketing. It's finding good people. With our ageing population and tightening immigration, that's getting worse, not better. AI isn't replacing your staff. It's giving the staff you can find the capability of two or three people. Businesses that figure this out first will out-deliver the ones that don't."
+  },
+  {
+    num: "04",
+    title: "Most AI consultants have never run a business.",
+    body: "Most AI consultants come from a tech background. They can build the tool but they've never had to make payroll, chase an invoice, or manage a difficult team member. Implementing AI in a small business isn't a technical problem. It's a business problem with a technical component. The order matters."
+  },
+  {
+    num: "05",
+    title: "The biggest AI risk isn't using it. It's your staff already using it badly.",
+    body: "Whether you have a policy or not, your team is pasting customer data, financial info, and confidential documents into ChatGPT right now. The question isn't if AI is in your business. It's whether it's being used safely. Most small businesses are running a quiet data leak they don't know about."
+  },
+  {
+    num: "06",
+    title: "The 'AI replaces jobs' debate misses the point for small business.",
+    body: "The conversation in the media is about AI replacing workers in big corporates. In small business it's the opposite. AI lets you avoid hiring roles you couldn't fill anyway. You're not making redundancies. You're sidestepping the recruitment problem entirely. That's a completely different conversation."
+  },
+  {
+    num: "07",
+    title: "The 'we'll wait until it's mature' trap.",
+    body: "By the time AI is mature enough that adoption feels safe, your competitors will have a two year head start on training, integration, and process redesign. Waiting isn't risk free. It's just a different kind of risk that's invisible until it's too late."
+  },
+  {
+    num: "08",
+    title: "AI doesn't replace judgment. It removes excuses for not having any.",
+    body: "Owners often say they don't have time to think about strategy. AI eats the admin, the email triage, the reporting, the proposal drafts. What's left is the actual thinking. For some owners, that's confronting, because they realise they've been hiding in busywork for years."
+  },
+  {
+    num: "09",
+    title: "Your customers are already using AI to research you.",
+    body: "When someone considers buying from you, they're asking ChatGPT or Google's AI for opinions on your business, your industry, and your competitors. If you don't know what those AI systems are saying about you, you're flying blind on the first impression that matters most."
+  },
+  {
+    num: "10",
+    title: "The real productivity gain isn't speed. It's removing the work that burns people out.",
+    body: "Everyone talks about AI making things faster. The bigger win is that it makes work less draining. Your staff don't quit because they're overworked. They quit because 70% of their day is mindless admin. Fix that and retention stops being a problem."
+  },
+  {
+    num: "11",
+    title: "Training your team on AI is a leadership issue, not an IT issue.",
+    body: "This isn't like rolling out new accounting software. AI literacy affects how every person in the business thinks, decides, and communicates. If you delegate it to whoever's good with computers, you'll get a half-built solution that nobody uses. It has to come from the top."
+  },
+  {
+    num: "12",
+    title: "The businesses that win won't have the best AI. They'll have the best questions.",
+    body: "The technology will commoditise. Everyone will have the same tools. What separates winners from the rest is knowing what to ask AI to do. That's a thinking skill, not a technical skill, and it's the one your business needs to build now."
+  }
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Acceso AI helps small businesses in Tasmania understand, adopt, and get real returns from AI. Based in Devonport, run by Joel Badcock." />
+    <title>Acceso AI — AI and Automation Consulting, Devonport Tasmania</title>
+  </head>
+  <body>
+
+    <!-- ═══════════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════════ -->
+    <section
+      id="hero"
+      style="min-height:100svh; display:flex; flex-direction:column; justify-content:center; padding: 0 1.5rem; max-width:900px; margin:0 auto;"
+    >
+      <div id="hero-inner">
+        <p class="section-label hero-line" style="margin-bottom:2rem;">Acceso AI</p>
+
+        <h1
+          class="hero-line"
+          style="font-size:clamp(2.75rem,7vw,5.5rem); font-weight:800; margin-bottom:1.75rem; letter-spacing:-0.02em;"
+        >
+          Most small businesses<br />
+          are behind on AI.<br />
+          <span class="accent">That gap is closing fast.</span>
+        </h1>
+
+        <p
+          class="hero-line"
+          style="font-size:clamp(1rem,2vw,1.25rem); color:#aaa; max-width:560px; margin-bottom:2.75rem; line-height:1.6;"
+        >
+          You don't need to become a tech company. You need to know which
+          three things AI could do in your business this week, and have
+          someone who's actually run a business help you do them right.
+        </p>
+
+        <a href="#assessment" class="btn-primary hero-line">Take the Opportunity Assessment</a>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         12 POINTS
+    ═══════════════════════════════════════════ -->
+    <section
+      id="points"
+      style="padding: 7rem 1.5rem; max-width:1100px; margin:0 auto; border-top:1px solid var(--border);"
+    >
+      <p class="section-label reveal">Provocations</p>
+      <h2
+        class="reveal"
+        style="font-size:clamp(1.75rem,4vw,3rem); max-width:700px; margin-bottom:1rem; letter-spacing:-0.02em;"
+      >
+        Things worth knowing before your competitors figure them out.
+      </h2>
+      <p class="reveal" style="color:var(--muted); max-width:520px; margin-bottom:4rem; font-size:0.9375rem;">
+        Tap or click any point to read more.
+      </p>
+
+      <div
+        id="points-grid"
+        style="display:grid; grid-template-columns: repeat(auto-fill, minmax(min(100%,480px),1fr)); gap:0 4rem;"
+      >
+        {points.map((p) => (
+          <div class="point-card" data-point>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;">
+              <div>
+                <p class="point-number">{p.num}</p>
+                <p class="point-title">{p.title}</p>
+              </div>
+              <span class="point-toggle" aria-hidden="true">+</span>
+            </div>
+            <div class="point-body">
+              <p class="point-body-text">{p.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         HOW IT WORKS
+    ═══════════════════════════════════════════ -->
+    <section
+      id="how"
+      style="padding: 7rem 1.5rem; border-top:1px solid var(--border);"
+    >
+      <div style="max-width:1100px; margin:0 auto;">
+        <p class="section-label reveal">Working together</p>
+        <h2
+          class="reveal"
+          style="font-size:clamp(1.75rem,4vw,3rem); margin-bottom:4rem; letter-spacing:-0.02em;"
+        >
+          Two ways to work together.
+        </h2>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr)); gap:3rem;">
+
+          <div class="reveal">
+            <p style="font-size:0.6875rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); font-family:'Syne',sans-serif; font-weight:700; margin-bottom:1rem;">Ongoing advisory</p>
+            <h3 style="font-size:1.5rem; margin-bottom:1.25rem; letter-spacing:-0.01em;">Stay ahead, month by month.</h3>
+            <p style="color:#aaa; line-height:1.75; font-size:0.9375rem;">
+              AI moves fast. Most business owners don't have time to track what's changing, what's
+              worth paying for, or what their staff are actually doing with it. An ongoing advisory
+              relationship means you always have someone in your corner who knows your business,
+              watches the landscape, and makes sure you're building an advantage, not just a
+              subscription bill.
+            </p>
+          </div>
+
+          <div class="reveal">
+            <p style="font-size:0.6875rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); font-family:'Syne',sans-serif; font-weight:700; margin-bottom:1rem;">One-off projects</p>
+            <h3 style="font-size:1.5rem; margin-bottom:1.25rem; letter-spacing:-0.01em;">Fix the specific thing that's costing you.</h3>
+            <p style="color:#aaa; line-height:1.75; font-size:0.9375rem;">
+              Sometimes you don't need a consultant. You need a result. Whether it's automating
+              a process that's eating hours every week, building a system that captures what
+              walks out the door when someone quits, or auditing what AI tools you're already
+              paying for and not using properly, project work is scoped, delivered, and done.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         ABOUT
+    ═══════════════════════════════════════════ -->
+    <section
+      id="about"
+      style="padding: 7rem 1.5rem; border-top:1px solid var(--border);"
+    >
+      <div style="max-width:700px; margin:0 auto;">
+        <p class="section-label reveal">About</p>
+        <h2
+          class="reveal"
+          style="font-size:clamp(1.75rem,4vw,3rem); margin-bottom:2rem; letter-spacing:-0.02em;"
+        >
+          Who you're working with.
+        </h2>
+        <div class="reveal">
+          <p style="color:#aaa; line-height:1.8; font-size:1.0625rem; margin-bottom:1.25rem;">
+            I'm Joel Badcock, based in Devonport on Tasmania's North West Coast. I spent three
+            years leading AI and automation work at Devonport City Council, translating what was
+            happening at the frontier into things that actually ran in a real organisation. I also
+            run Bakers Walking Company, so I know what it's like to be on the other side of the
+            table: the invoices, the staff, the decisions you make with incomplete information.
+          </p>
+          <p style="color:#aaa; line-height:1.8; font-size:1.0625rem;">
+            Acceso AI exists because most small businesses can't afford to hire an AI team and
+            don't need one. They need someone who understands the technology, has run a business,
+            and will tell them the truth about what's worth doing and what isn't.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         OPPORTUNITY ASSESSMENT
+    ═══════════════════════════════════════════ -->
+    <section
+      id="assessment"
+      style="padding: 7rem 1.5rem; border-top:1px solid var(--border);"
+    >
+      <div style="max-width:900px; margin:0 auto;">
+        <div class="soa-box reveal-scale">
+          <p class="section-label" style="margin-bottom:1.5rem;">Free Opportunity Assessment</p>
+          <h2
+            style="font-size:clamp(1.75rem,4vw,3rem); margin-bottom:1.5rem; letter-spacing:-0.02em;"
+          >
+            Find out where your business actually stands.
+          </h2>
+          <p style="color:#aaa; max-width:560px; line-height:1.8; margin-bottom:2.25rem; font-size:1.0625rem;">
+            The Opportunity Assessment is a short questionnaire that produces a personalised
+            report showing exactly where AI could have the most impact in your business. It's
+            free. I review every submission personally and only follow up with businesses I can
+            genuinely help.
+          </p>
+          <a href="[CONTENT NEEDED: ScoreApp or assessment URL]" class="btn-primary">
+            Take the Opportunity Assessment
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════ -->
+    <footer
+      style="border-top:1px solid var(--border); padding:2.5rem 1.5rem;"
+    >
+      <div
+        style="max-width:1100px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1rem;"
+      >
+        <p style="font-family:'Syne',sans-serif; font-weight:700; font-size:0.9375rem;">Acceso AI</p>
+        <p style="color:var(--muted); font-size:0.875rem;">
+          Devonport, Tasmania &nbsp;·&nbsp;
+          <a href="mailto:[CONTENT NEEDED: email]" style="color:var(--muted); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">[CONTENT NEEDED: email]</a>
+        </p>
+      </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════
+         SCRIPTS
+    ═══════════════════════════════════════════ -->
+    <script>
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ── Hero entrance ──────────────────────────────
+      if (!prefersReduced) {
+        const heroLines = document.querySelectorAll('.hero-line');
+        gsap.fromTo(
+          heroLines,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            stagger: 0.18,
+            ease: 'power3.out',
+            delay: 0.15
+          }
+        );
+      } else {
+        document.querySelectorAll('.hero-line').forEach((el) => {
+          (el as HTMLElement).style.opacity = '1';
+        });
+      }
+
+      // ── Generic scroll reveals ──────────────────────
+      if (!prefersReduced) {
+        gsap.utils.toArray<HTMLElement>('.reveal').forEach((el) => {
+          gsap.fromTo(
+            el,
+            { opacity: 0, y: 32 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.75,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 88%',
+                once: true
+              }
+            }
+          );
+        });
+
+        // Scale-in for SOA box
+        gsap.utils.toArray<HTMLElement>('.reveal-scale').forEach((el) => {
+          gsap.fromTo(
+            el,
+            { opacity: 0, scale: 0.97 },
+            {
+              opacity: 1,
+              scale: 1,
+              duration: 0.7,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 85%',
+                once: true
+              }
+            }
+          );
+        });
+
+        // Staggered point cards
+        const pointCards = document.querySelectorAll<HTMLElement>('[data-point]');
+        gsap.fromTo(
+          pointCards,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.07,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: '#points-grid',
+              start: 'top 80%',
+              once: true
+            }
+          }
+        );
+      } else {
+        document.querySelectorAll<HTMLElement>('.reveal, .reveal-scale, [data-point]').forEach((el) => {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
+      }
+
+      // ── Point card expand/collapse ─────────────────
+      document.querySelectorAll<HTMLElement>('[data-point]').forEach((card) => {
+        card.addEventListener('click', () => {
+          const isOpen = card.classList.contains('open');
+          // Close all
+          document.querySelectorAll('[data-point].open').forEach((c) => c.classList.remove('open'));
+          // Toggle clicked
+          if (!isOpen) card.classList.add('open');
+        });
+
+        // Keyboard accessibility
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role', 'button');
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            card.click();
+          }
+        });
+      });
+    </script>
+
+  </body>
+</html>
