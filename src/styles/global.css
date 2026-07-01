@@ -420,6 +420,96 @@ a:focus-visible, button:focus-visible {
   display: inline-flex;
 }
 
+/* ═══ Imagery ═════════════════════════════ */
+.img-frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper-deep);
+  border-radius: 2px;
+}
+
+.img-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* parallax inner image gets extra scale so edges never show */
+.img-parallax img {
+  transform: scale(1.14);
+  will-change: transform;
+}
+.motion-off .img-parallax img { transform: none; }
+
+/* clip reveal on scroll */
+.img-reveal {
+  clip-path: inset(12% 6% 12% 6%);
+}
+.motion-off .img-reveal { clip-path: inset(0 0 0 0); }
+
+/* if a hotlinked image fails, hide its whole band gracefully */
+.img-missing { display: none !important; }
+
+.hero-band {
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+.hero-band .img-frame {
+  height: clamp(320px, 58vh, 620px);
+}
+
+.img-caption {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-top: 0.875rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.img-caption::before {
+  content: '';
+  width: 1.5rem;
+  height: 1px;
+  background: var(--muted);
+  align-self: center;
+}
+
+/* full width photo interlude */
+.interlude {
+  position: relative;
+  height: clamp(380px, 68vh, 640px);
+  overflow: hidden;
+}
+.interlude img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 118%;
+  object-fit: cover;
+  will-change: transform;
+}
+.interlude-caption {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background: linear-gradient(to top, rgba(22, 19, 16, 0.62), transparent);
+}
+.interlude-caption p {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: clamp(1.25rem, 2.6vw, 1.9rem);
+  color: #fff;
+  max-width: 26ch;
+  line-height: 1.3;
+}
+
+/* about portrait */
+.about-media { display: grid; gap: 1.5rem; }
+.about-media .img-frame { aspect-ratio: 4 / 5; }
+
 /* ═══ Marquee credibility strip ═══════════ */
 .marquee {
   border-top: 1px solid var(--hairline);
