@@ -1,0 +1,20 @@
+paths:
+  static: ''
+  uploads: uploads
+timezone: Australia/Hobart
+markdown:
+  engine: commonmark
+  options: {}
+collections_config:
+  on_scroll_typography_animations_dist:
+    path: OnScrollTypographyAnimations/dist
+    icon: custom_typography
+  on_scroll_typography_animations_src:
+    path: OnScrollTypographyAnimations/src
+    icon: custom_typography
+  tailwind_landing_page_template:
+    path: tailwind-landing-page-template
+    icon: airline_seat_flat
+  ui_ux_pro_max_skill:
+    path: ui-ux-pro-max-skill
+    icon: tools_power_drill
