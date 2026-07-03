@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600;700;800&display=swap');
 
 @import "tailwindcss";
 
@@ -187,18 +187,37 @@ a:focus-visible, button:focus-visible {
 }
 
 .wordmark {
-  font-family: 'Fraunces', serif;
-  font-weight: 600;
-  font-size: 1.3rem;
-  letter-spacing: -0.02em;
-  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   text-decoration: none;
 }
-.wordmark sup {
-  font-size: 0.55em;
-  color: var(--accent);
-  font-style: italic;
-  margin-left: 1px;
+.wordmark-icon {
+  width: 1.9rem;
+  height: 1.9rem;
+  flex-shrink: 0;
+}
+.wordmark-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.wordmark-word {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.wordmark-tagline {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  opacity: 0.6;
+  margin-top: 3px;
 }
 
 .nav-links {
@@ -1177,7 +1196,8 @@ a:focus-visible, button:focus-visible {
 }
 .footer a:hover { color: var(--dark-text); }
 
-.footer .wordmark { color: var(--dark-text); }
+.footer .wordmark-word { color: var(--dark-text); }
+.footer .wordmark-tagline { color: var(--dark-muted); opacity: 0.8; }
 
 .footer-mark {
   font-family: 'Fraunces', serif;
