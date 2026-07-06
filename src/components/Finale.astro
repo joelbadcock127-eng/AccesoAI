@@ -1,0 +1,26 @@
+---
+interface Props {
+  heading?: string;
+  lede?: string;
+}
+
+const {
+  heading = 'Stop guessing about AI. <em>Start knowing.</em>',
+  lede = 'A free six-minute assessment showing where your business could save time. Working with businesses across Devonport, Burnie, Launceston, and Hobart.',
+} = Astro.props;
+---
+
+<section class="finale section" id="contact">
+  <div class="wrap">
+    <p class="eyebrow rv"><span data-scramble>Get Started</span></p>
+    <h2 data-split set:html={heading} />
+    <p class="lede rv">{lede}</p>
+    <div class="finale-ctas rv">
+      <a href="https://accesoai.scoreapp.com/" target="_blank" rel="noopener" class="btn btn-paper">
+        Take the AI Opportunity Assessment
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+      </a>
+      <a href="mailto:Joel@bakerswalkingco.au" class="btn btn-ghost-dark">Contact Acceso AI</a>
+    </div>
+  </div>
+</section>

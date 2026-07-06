@@ -127,7 +127,7 @@ a:focus-visible, button:focus-visible {
   border: 1px solid transparent;
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
   white-space: nowrap;
 }
 
@@ -138,27 +138,27 @@ a:focus-visible, button:focus-visible {
   background: var(--ink);
   color: var(--paper);
 }
-.btn-ink:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+.btn-ink:hover { background: var(--accent); color: #fff; }
 
 .btn-line {
   background: transparent;
   color: var(--ink);
   border-color: var(--ink);
 }
-.btn-line:hover { background: var(--ink); color: var(--paper); transform: translateY(-1px); }
+.btn-line:hover { background: var(--ink); color: var(--paper); }
 
 .btn-paper {
   background: var(--paper);
   color: var(--ink);
 }
-.btn-paper:hover { background: #fff; transform: translateY(-1px); }
+.btn-paper:hover { background: #fff; }
 
 .btn-ghost-dark {
   background: transparent;
   color: var(--dark-text);
   border-color: var(--dark-hairline);
 }
-.btn-ghost-dark:hover { border-color: var(--dark-text); transform: translateY(-1px); }
+.btn-ghost-dark:hover { border-color: var(--dark-text); }
 
 .btn-sm { padding: 0.7rem 1.375rem; font-size: 0.84rem; }
 
@@ -341,19 +341,8 @@ a:focus-visible, button:focus-visible {
 }
 .hero h1 em { color: var(--accent); }
 
-/* word-split animation targets */
-.split .w-mask {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: bottom;
-  padding-bottom: 0.12em;
-  margin-bottom: -0.12em;
-}
-.split .w {
-  display: inline-block;
-  transform: translateY(110%);
-}
-.no-js .split .w, .motion-off .split .w { transform: none; }
+/* GSAP SplitText targets — hidden until split, only when JS is on and motion allowed */
+html.js:not(.motion-off) [data-split] { visibility: hidden; }
 
 .hero-sub {
   font-size: clamp(1.0625rem, 1.7vw, 1.3125rem);
@@ -369,8 +358,7 @@ a:focus-visible, button:focus-visible {
   align-items: center;
 }
 
-.hero-fade { opacity: 0; }
-.motion-off .hero-fade { opacity: 1; }
+html.js:not(.motion-off) .hero-fade { opacity: 0; }
 
 /* Workflow strip in hero */
 .flow {
@@ -455,17 +443,15 @@ a:focus-visible, button:focus-visible {
 }
 
 /* parallax inner image gets extra scale so edges never show */
-.img-parallax img {
+html.js:not(.motion-off) .img-parallax img {
   transform: scale(1.14);
   will-change: transform;
 }
-.motion-off .img-parallax img { transform: none; }
 
 /* clip reveal on scroll */
-.img-reveal {
+html.js:not(.motion-off) .img-reveal {
   clip-path: inset(12% 6% 12% 6%);
 }
-.motion-off .img-reveal { clip-path: inset(0 0 0 0); }
 
 /* if a hotlinked image fails, hide its whole band gracefully */
 .img-missing { display: none !important; }
@@ -655,10 +641,9 @@ a:focus-visible, button:focus-visible {
   height: 1px;
   width: 100%;
   background: var(--accent);
-  transform: scaleX(0);
   transform-origin: 0 50%;
 }
-.motion-off .process-progress { transform: scaleX(1); }
+html.js:not(.motion-off) .process-progress { transform: scaleX(0); }
 
 .process-col {
   padding: clamp(2rem, 4vw, 3rem) 0;
@@ -1224,17 +1209,86 @@ a:focus-visible, button:focus-visible {
 }
 
 /* ═══ Reveal targets ══════════════════════ */
-.rv { opacity: 0; transform: translateY(30px); }
-.rv-l { opacity: 0; transform: translateX(-30px); }
-.motion-off .rv, .motion-off .rv-l { opacity: 1; transform: none; }
+html.js:not(.motion-off) .rv { opacity: 0; transform: translateY(30px); }
+html.js:not(.motion-off) .rv-l { opacity: 0; transform: translateX(-30px); }
+
+/* ═══ New motion & page furniture ═════════ */
+
+/* Scroll progress hairline */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  z-index: 200;
+  pointer-events: none;
+}
+
+/* Hero shell + node-network canvas */
+.hero-shell { position: relative; overflow: hidden; }
+.net-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+}
+.hero-shell > .hero,
+.hero-shell > .page-hero { position: relative; }
+
+/* Sub-page hero */
+.page-hero {
+  padding-top: clamp(9rem, 20vh, 13rem);
+  padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+.page-hero h1 {
+  font-size: clamp(2.6rem, 6.4vw, 5.4rem);
+  font-weight: 380;
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  max-width: 16ch;
+  margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+}
+.page-hero h1 em { color: var(--accent); }
+.page-hero .lede { max-width: 48ch; }
+
+/* Active nav link */
+.nav-links a.active { color: var(--ink); }
+.nav-links a.active::after {
+  transform: scaleX(1);
+  transform-origin: 0% 50%;
+}
+
+/* Cursor spotlight on cards */
+[data-spotlight] { position: relative; overflow: hidden; }
+[data-spotlight]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(44, 92, 197, 0.09), transparent 65%);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+@media (pointer: fine) {
+  [data-spotlight]:hover::after { opacity: 1; }
+}
 
 /* ═══ Reduced motion ══════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .rv, .rv-l, .hero-fade { opacity: 1 !important; transform: none !important; }
-  .split .w { transform: none !important; }
+  [data-split] { visibility: visible !important; }
   .marquee-inner { animation: none !important; }
   .flow-step.lit .pip { animation: none !important; }
   .process-progress { transform: scaleX(1) !important; }
+  .img-reveal { clip-path: inset(0 0 0 0) !important; }
+  .img-parallax img { transform: none !important; }
+  .scroll-progress { display: none; }
   .faq-a { transition: none; }
 }

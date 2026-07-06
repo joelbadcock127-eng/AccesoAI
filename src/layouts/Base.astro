@@ -1,0 +1,552 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  jsonLd?: Record<string, unknown>;
+}
+
+const { title, description, path, jsonLd } = Astro.props;
+
+const siteUrl = 'https://www.accesoai.com.au';
+const canonical = siteUrl + path;
+const ogImage = `${siteUrl}/2021_Devonport_Aerial.width-1440.jpg`;
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/services/', label: 'Services' },
+  { href: '/about/', label: 'About' },
+];
+
+const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isActive = (href: string) => (href.replace(/\/+$/, '') || '/') === currentPath;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Acceso AI" />
+    <!-- TODO: replace with a dedicated 1200x630 branded OG image; this is the site's hero photo used as a placeholder -->
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1440" />
+    <meta property="og:image:height" content="810" />
+    <meta property="og:image:alt" content="Aerial view of Devonport, Tasmania" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <ClientRouter />
+  </head>
+
+  <body>
+    <div class="scroll-progress" aria-hidden="true"></div>
+
+    <!-- ═══ NAV ═══════════════════════════ -->
+    <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="/" class="wordmark">
+          <img src="/logo-mark.svg" alt="" class="wordmark-icon" width="32" height="32" />
+          <span class="wordmark-text">
+            <span class="wordmark-word">Acceso AI</span>
+            <span class="wordmark-tagline">AI Consulting</span>
+          </span>
+        </a>
+
+        <ul class="nav-links">
+          {links.map((l) => (
+            <li>
+              <a href={l.href} class={isActive(l.href) ? 'active' : undefined} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
+            </li>
+          ))}
+        </ul>
+
+        <div class="nav-actions">
+          <a href="mailto:Joel@bakerswalkingco.au" class="btn btn-line btn-sm">Contact</a>
+          <a href="https://accesoai.scoreapp.com/" target="_blank" rel="noopener" class="btn btn-ink btn-sm">Take the Assessment</a>
+        </div>
+
+        <button class="burger" id="burger" aria-label="Open menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+      <button class="mobile-close" id="mobile-close" aria-label="Close menu">&times;</button>
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      <a href="https://accesoai.scoreapp.com/" target="_blank" rel="noopener" class="btn btn-ink" style="margin-top:1.5rem; border-bottom:none; font-family:'Inter',sans-serif; font-size:0.9375rem; align-self:flex-start;">Take the Assessment</a>
+    </div>
+
+    <slot />
+
+    <!-- ═══ FOOTER ════════════════════════ -->
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-cols">
+          <div>
+            <a href="/" class="wordmark">
+              <img src="/logo-mark.svg" alt="" class="wordmark-icon" width="32" height="32" />
+              <span class="wordmark-text">
+                <span class="wordmark-word">Acceso AI</span>
+                <span class="wordmark-tagline">AI Consulting</span>
+              </span>
+            </a>
+            <p class="footer-desc">
+              Practical AI and automation for Tasmanian small business.
+              Based in Devonport, working across the state.
+            </p>
+          </div>
+          <div>
+            <h4>Navigate</h4>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/services/">Services</a></li>
+              <li><a href="/about/">About</a></li>
+              <li><a href="/about/#faq">FAQ</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Connect</h4>
+            <ul>
+              <li><a href="https://accesoai.scoreapp.com/" target="_blank" rel="noopener">Take the Assessment</a></li>
+              <li><a href="mailto:Joel@bakerswalkingco.au">Joel@bakerswalkingco.au</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <p class="footer-mark" aria-hidden="true">Acceso AI</p>
+
+      <div class="wrap">
+        <div class="footer-legal">
+          <p>&copy; 2026 Acceso AI. All rights reserved.</p>
+          <p>Devonport, Tasmania</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ═══ MOTION ════════════════════════ -->
+    <script>
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+      import { SplitText } from 'gsap/SplitText';
+      import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
+
+      gsap.registerPlugin(ScrollTrigger, SplitText, ScrambleTextPlugin);
+
+      let ac: AbortController | undefined;
+      let netRaf = 0;
+
+      const reduced = () =>
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ── Nav + mobile menu ─────────────── */
+      function initNav(signal: AbortSignal) {
+        const nav = document.getElementById('nav');
+        if (nav) {
+          const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 32);
+          onScroll();
+          window.addEventListener('scroll', onScroll, { passive: true, signal });
+        }
+        const burger = document.getElementById('burger');
+        const menu = document.getElementById('mobile-menu');
+        const closeBtn = document.getElementById('mobile-close');
+        if (burger && menu && closeBtn) {
+          burger.addEventListener('click', () => menu.classList.add('open'), { signal });
+          closeBtn.addEventListener('click', () => menu.classList.remove('open'), { signal });
+          menu.querySelectorAll('a').forEach((a) =>
+            a.addEventListener('click', () => menu.classList.remove('open'), { signal })
+          );
+        }
+      }
+
+      /* ── Scroll progress hairline ──────── */
+      function initProgress(signal: AbortSignal) {
+        const bar = document.querySelector<HTMLElement>('.scroll-progress');
+        if (!bar) return;
+        const update = () => {
+          const max = document.documentElement.scrollHeight - window.innerHeight;
+          bar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+        };
+        update();
+        window.addEventListener('scroll', update, { passive: true, signal });
+        window.addEventListener('resize', update, { passive: true, signal });
+      }
+
+      /* ── Headline splits ───────────────── */
+      // data-split="hero" → char cascade on load; data-split → word rise on scroll
+      function initSplits(signal: AbortSignal) {
+        const show = (el: HTMLElement) => { el.style.visibility = 'visible'; };
+
+        document.querySelectorAll<HTMLElement>('[data-split]').forEach((el) => {
+          if (reduced()) { show(el); return; }
+
+          document.fonts.ready.then(() => {
+            if (signal.aborted) return;
+            try {
+              if (el.dataset.split === 'hero') {
+                const split = new SplitText(el, { type: 'words,chars', mask: 'chars' });
+                show(el);
+                const tl = gsap.timeline({ delay: 0.1 });
+                tl.from(split.chars, {
+                  yPercent: 115,
+                  duration: 0.9,
+                  stagger: 0.014,
+                  ease: 'power4.out',
+                });
+                tl.to('.hero-fade', {
+                  opacity: 1,
+                  duration: 0.8,
+                  stagger: 0.1,
+                  ease: 'power2.out',
+                }, '-=0.5');
+              } else {
+                const split = new SplitText(el, { type: 'words', mask: 'words' });
+                show(el);
+                gsap.from(split.words, {
+                  yPercent: 115,
+                  duration: 0.8,
+                  stagger: 0.035,
+                  ease: 'power4.out',
+                  scrollTrigger: { trigger: el, start: 'top 86%', once: true },
+                });
+              }
+            } catch {
+              show(el);
+              document.querySelectorAll<HTMLElement>('.hero-fade').forEach((f) => { f.style.opacity = '1'; });
+            }
+          });
+        });
+
+        if (reduced()) {
+          document.querySelectorAll<HTMLElement>('.hero-fade').forEach((f) => { f.style.opacity = '1'; });
+        }
+      }
+
+      /* ── Scramble decode labels ────────── */
+      function initScramble() {
+        if (reduced()) return;
+        document.querySelectorAll<HTMLElement>('[data-scramble]').forEach((el) => {
+          const text = el.textContent || '';
+          ScrollTrigger.create({
+            trigger: el,
+            start: 'top 92%',
+            once: true,
+            onEnter: () =>
+              gsap.to(el, {
+                duration: 1.1,
+                scrambleText: { text, chars: '01<>*▪▫/', speed: 0.35 },
+              }),
+          });
+        });
+      }
+
+      /* ── Scroll reveals + parallax ─────── */
+      function initReveals() {
+        if (reduced()) return;
+
+        gsap.utils.toArray<HTMLElement>('.rv').forEach((el) => {
+          gsap.to(el, {
+            opacity: 1, y: 0,
+            duration: 0.85,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+          });
+        });
+
+        gsap.utils.toArray<HTMLElement>('.rv-l').forEach((el) => {
+          gsap.to(el, {
+            opacity: 1, x: 0,
+            duration: 0.85,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+          });
+        });
+
+        gsap.utils.toArray<HTMLElement>('.img-reveal').forEach((el) => {
+          gsap.to(el, {
+            clipPath: 'inset(0% 0% 0% 0%)',
+            duration: 1.3,
+            ease: 'power3.inOut',
+            scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+          });
+        });
+
+        gsap.utils.toArray<HTMLElement>('.img-parallax img').forEach((img) => {
+          gsap.fromTo(img,
+            { yPercent: -5 },
+            {
+              yPercent: 5,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: img.closest('.img-frame'),
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.5,
+              },
+            }
+          );
+        });
+
+        const interludeImg = document.getElementById('interlude-img');
+        if (interludeImg) {
+          gsap.fromTo(interludeImg,
+            { yPercent: 0 },
+            {
+              yPercent: -14,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '.interlude',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.5,
+              },
+            }
+          );
+        }
+
+        const progress = document.getElementById('process-progress');
+        if (progress) {
+          gsap.to(progress, {
+            scaleX: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '.process-grid',
+              start: 'top 80%',
+              end: 'bottom 45%',
+              scrub: 0.6,
+            },
+          });
+        }
+
+        gsap.utils.toArray<HTMLElement>('[data-step]').forEach((col, i) => {
+          ScrollTrigger.create({
+            trigger: col,
+            start: 'top 70%',
+            once: true,
+            onEnter: () => {
+              setTimeout(() => col.classList.add('active'), i * 220);
+            },
+          });
+        });
+      }
+
+      /* ── Count-up stats ────────────────── */
+      function initCounters() {
+        document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
+          const target = parseFloat(el.dataset.count || '0');
+          if (reduced()) { el.textContent = String(target); return; }
+          const obj = { v: 0 };
+          ScrollTrigger.create({
+            trigger: el,
+            start: 'top 88%',
+            once: true,
+            onEnter: () =>
+              gsap.to(obj, {
+                v: target,
+                duration: 1.4,
+                ease: 'power2.out',
+                onUpdate: () => { el.textContent = String(Math.round(obj.v)); },
+              }),
+          });
+        });
+      }
+
+      /* ── Magnetic buttons ──────────────── */
+      function initMagnetic(signal: AbortSignal) {
+        if (reduced() || !window.matchMedia('(pointer: fine)').matches) return;
+        document.querySelectorAll<HTMLElement>('.btn').forEach((btn) => {
+          const xTo = gsap.quickTo(btn, 'x', { duration: 0.4, ease: 'power3' });
+          const yTo = gsap.quickTo(btn, 'y', { duration: 0.4, ease: 'power3' });
+          btn.addEventListener('pointermove', (e) => {
+            const r = btn.getBoundingClientRect();
+            xTo((e.clientX - (r.left + r.width / 2)) * 0.22);
+            yTo((e.clientY - (r.top + r.height / 2)) * 0.34);
+          }, { signal });
+          btn.addEventListener('pointerleave', () => { xTo(0); yTo(0); }, { signal });
+        });
+      }
+
+      /* ── Cursor spotlight on cards ─────── */
+      function initSpotlight(signal: AbortSignal) {
+        if (!window.matchMedia('(pointer: fine)').matches) return;
+        document.querySelectorAll<HTMLElement>('[data-spotlight]').forEach((cell) => {
+          cell.addEventListener('pointermove', (e) => {
+            const r = cell.getBoundingClientRect();
+            cell.style.setProperty('--mx', `${e.clientX - r.left}px`);
+            cell.style.setProperty('--my', `${e.clientY - r.top}px`);
+          }, { signal });
+        });
+      }
+
+      /* ── Node network canvas ───────────── */
+      function initNet(signal: AbortSignal) {
+        const canvas = document.querySelector<HTMLCanvasElement>('.net-canvas');
+        const parent = canvas?.parentElement;
+        const ctx = canvas?.getContext('2d');
+        if (!canvas || !parent || !ctx) return;
+
+        const LINK = 130;
+        const MOUSE_LINK = 170;
+        let w = 0, h = 0;
+        let nodes: { x: number; y: number; vx: number; vy: number }[] = [];
+        const mouse = { x: -9999, y: -9999 };
+
+        const resize = () => {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          w = parent.clientWidth;
+          h = parent.clientHeight;
+          canvas.width = w * dpr;
+          canvas.height = h * dpr;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          const count = Math.min(80, Math.round((w * h) / 16000));
+          nodes = Array.from({ length: count }, () => ({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.24,
+            vy: (Math.random() - 0.5) * 0.24,
+          }));
+        };
+
+        const draw = () => {
+          ctx.clearRect(0, 0, w, h);
+          for (let i = 0; i < nodes.length; i++) {
+            const a = nodes[i];
+            for (let j = i + 1; j < nodes.length; j++) {
+              const b = nodes[j];
+              const dx = a.x - b.x, dy = a.y - b.y;
+              const d = Math.hypot(dx, dy);
+              if (d < LINK) {
+                ctx.strokeStyle = `rgba(44, 92, 197, ${(1 - d / LINK) * 0.28})`;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(a.x, a.y);
+                ctx.lineTo(b.x, b.y);
+                ctx.stroke();
+              }
+            }
+            const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
+            if (md < MOUSE_LINK) {
+              ctx.strokeStyle = `rgba(44, 92, 197, ${(1 - md / MOUSE_LINK) * 0.4})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(mouse.x, mouse.y);
+              ctx.stroke();
+            }
+            ctx.fillStyle = 'rgba(44, 92, 197, 0.5)';
+            ctx.beginPath();
+            ctx.arc(a.x, a.y, 1.7, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        };
+
+        const step = () => {
+          for (const n of nodes) {
+            n.x += n.vx;
+            n.y += n.vy;
+            if (n.x < 0 || n.x > w) n.vx *= -1;
+            if (n.y < 0 || n.y > h) n.vy *= -1;
+          }
+        };
+
+        resize();
+        window.addEventListener('resize', resize, { passive: true, signal });
+
+        if (reduced()) { draw(); return; }
+
+        parent.addEventListener('pointermove', (e) => {
+          const r = canvas.getBoundingClientRect();
+          mouse.x = e.clientX - r.left;
+          mouse.y = e.clientY - r.top;
+        }, { signal });
+        parent.addEventListener('pointerleave', () => { mouse.x = -9999; mouse.y = -9999; }, { signal });
+
+        const loop = () => {
+          step();
+          draw();
+          netRaf = requestAnimationFrame(loop);
+        };
+        loop();
+      }
+
+      /* ── Hide bands whose image fails ──── */
+      function initOptionalImages(signal: AbortSignal) {
+        document.querySelectorAll<HTMLImageElement>('img[data-optional]').forEach((img) => {
+          const hideBand = () => {
+            img.closest<HTMLElement>('[data-img-frame]')?.classList.add('img-missing');
+            ScrollTrigger.refresh();
+          };
+          if (img.complete && img.naturalWidth === 0) hideBand();
+          img.addEventListener('error', hideBand, { signal });
+        });
+      }
+
+      /* ── FAQ accordion ─────────────────── */
+      function initFaq(signal: AbortSignal) {
+        document.querySelectorAll<HTMLElement>('[data-faq]').forEach((item) => {
+          const btn = item.querySelector<HTMLButtonElement>('.faq-q');
+          if (!btn) return;
+          btn.addEventListener('click', () => {
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('[data-faq].open').forEach((i) => {
+              i.classList.remove('open');
+              i.querySelector('.faq-q')?.setAttribute('aria-expanded', 'false');
+            });
+            if (!isOpen) {
+              item.classList.add('open');
+              btn.setAttribute('aria-expanded', 'true');
+            }
+          }, { signal });
+        });
+      }
+
+      function initAll() {
+        ac?.abort();
+        ac = new AbortController();
+        cancelAnimationFrame(netRaf);
+        ScrollTrigger.getAll().forEach((t) => t.kill());
+
+        if (reduced()) document.documentElement.classList.add('motion-off');
+
+        const signal = ac.signal;
+        initNav(signal);
+        initProgress(signal);
+        initSplits(signal);
+        initScramble();
+        initReveals();
+        initCounters();
+        initMagnetic(signal);
+        initSpotlight(signal);
+        initNet(signal);
+        initOptionalImages(signal);
+        initFaq(signal);
+      }
+
+      // Fires on first load and after every ClientRouter page swap
+      document.addEventListener('astro:page-load', initAll);
+      window.addEventListener('load', () => ScrollTrigger.refresh());
+    </script>
+  </body>
+</html>

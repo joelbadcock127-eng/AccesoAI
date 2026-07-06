@@ -1,0 +1,132 @@
+---
+import Base from '../layouts/Base.astro';
+import Finale from '../components/Finale.astro';
+
+const services = [
+  { idx: "S.01", title: "AI Opportunity Review", desc: "A focused review of your business, with opportunities ranked by impact and feasibility." },
+  { idx: "S.02", title: "Workflow Automation", desc: "Admin, enquiries, forms, and reporting that run themselves." },
+  { idx: "S.03", title: "AI Assistants", desc: "Custom assistants trained on your documents, procedures, and customer questions." },
+  { idx: "S.04", title: "Website & Lead Systems", desc: "Websites that capture, qualify, and respond to leads automatically." },
+  { idx: "S.05", title: "Staff AI Enablement", desc: "Helping your team use AI safely and effectively, day to day." }
+];
+
+const useCases = [
+  { tag: "Sales", title: "Enquiry assistant", desc: "Common questions answered fast, and routed to the right person." },
+  { tag: "Sales", title: "Quote & reminder automation", desc: "Quotes drafted automatically. Reminders that never get forgotten." },
+  { tag: "Operations", title: "Admin workflow automation", desc: "Repetitive processes turned into workflows that run unsupervised." },
+  { tag: "Knowledge", title: "Internal AI assistant", desc: "Instant answers on procedures and policies. No digging." },
+  { tag: "Marketing", title: "Content assistant", desc: "First drafts of posts and emails, generated from your own knowledge." },
+  { tag: "Finance", title: "Reporting automation", desc: "Spreadsheet work replaced with clear, automatic reporting." }
+];
+---
+
+<Base
+  title="Services | Acceso AI"
+  description="AI opportunity reviews, workflow automation, custom AI assistants, lead systems, and staff enablement for Tasmanian small and medium businesses."
+  path="/services/"
+>
+  <!-- ═══ PAGE HERO ═════════════════════ -->
+  <div class="hero-shell">
+    <canvas class="net-canvas" aria-hidden="true"></canvas>
+    <header class="page-hero wrap">
+      <p class="eyebrow hero-fade"><span class="idx">01</span> <span data-scramble>Services</span></p>
+      <h1 data-split="hero">Scoped around your business, <em>not a fixed product.</em></h1>
+      <p class="lede hero-fade">
+        Five ways we work with Tasmanian businesses — from a first review to fully built systems.
+      </p>
+    </header>
+  </div>
+
+  <!-- ═══ SERVICES ══════════════════════ -->
+  <section class="section wrap" id="services" style="padding-top: clamp(2rem, 4vw, 3.5rem);">
+    <div class="service-rows">
+      {services.map((s) => (
+        <div class="service-row rv">
+          <span class="service-idx">{s.idx}</span>
+          <h3>{s.title}</h3>
+          <p>{s.desc}</p>
+          <span class="service-go" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          </span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ═══ USE CASES ═════════════════════ -->
+  <section class="section wrap" id="usecases">
+    <p class="eyebrow rv"><span class="idx">02</span> <span data-scramble>In Practice</span></p>
+    <h2 class="display" data-split style="margin-bottom: clamp(2.5rem, 5vw, 4rem);">
+      What this looks like <em>in practice.</em>
+    </h2>
+
+    <div class="bento">
+      {useCases.map((u, i) => (
+        <div class="bento-cell rv" data-spotlight>
+          <span class="cell-num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="tag">{u.tag}</span>
+          <h3>{u.title}</h3>
+          <p>{u.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ═══ PHOTO INTERLUDE ═══════════════ -->
+  <div class="interlude" data-img-frame>
+    <img
+      data-optional
+      id="interlude-img"
+      src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2000&q=80"
+      alt="Colleagues laughing and joining hands over a desk in a modern office"
+      loading="lazy"
+    />
+    <div class="interlude-caption">
+      <p>Less time on admin. More time for the work your team actually enjoys.</p>
+    </div>
+  </div>
+
+  <!-- ═══ EXAMPLE OUTCOME ═══════════════ -->
+  <section class="section wrap" id="outcome">
+    <p class="eyebrow rv"><span class="idx">03</span> <span data-scramble>Example Outcome</span></p>
+    <h2 class="display" data-split style="margin-bottom: clamp(2.5rem, 5vw, 4rem);">
+      One workflow, <em>before and after.</em>
+    </h2>
+
+    <div class="outcome rv">
+      <div class="outcome-grid">
+        <div class="outcome-side before">
+          <p class="outcome-label">Before</p>
+          <ul class="outcome-list">
+            <li>Owner answers every enquiry by hand</li>
+            <li>Quotes built from scratch, every time</li>
+            <li>Reminders happen inconsistently, if at all</li>
+            <li>No record of what was sent, or when</li>
+          </ul>
+        </div>
+        <div class="outcome-side after">
+          <p class="outcome-label">After</p>
+          <ul class="outcome-list">
+            <li>AI drafts responses within minutes</li>
+            <li>Quote information prepared automatically</li>
+            <li>Reminders triggered on schedule</li>
+            <li>Every interaction tracked and searchable</li>
+          </ul>
+        </div>
+      </div>
+      <div class="outcome-result">
+        <span class="k">The Result</span>
+        <span class="v">Faster responses, less admin, fewer missed opportunities.</span>
+      </div>
+    </div>
+
+    <p class="rv" style="margin-top: 1.25rem; font-size: 0.8125rem; color: var(--muted);">
+      An illustrative scenario. The same pattern applies to trades, professional services, tourism, retail, and hospitality.
+    </p>
+  </section>
+
+  <Finale
+    heading="Not sure where to start? <em>Start with the assessment.</em>"
+    lede="Six free minutes that show which of these systems would pay off first in your business."
+  />
+</Base>

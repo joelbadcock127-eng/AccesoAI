@@ -1,39 +1,13 @@
 ---
-import '../styles/global.css';
+import Base from '../layouts/Base.astro';
 
 const problems = [
-  { num: "01", title: "Enquiries answered too slowly", desc: "Customer questions sit in inboxes while competitors respond first. Every hour of delay costs trust, and often the sale." },
-  { num: "02", title: "Staff repeating the same admin", desc: "Hours spent each week on tasks that could be handled in minutes with the right systems quietly running in the background." },
-  { num: "03", title: "Quotes and reminders done by hand", desc: "Proposals built from scratch every time, while reminders are chased manually or forgotten entirely. Opportunities slip through the gaps." },
-  { num: "04", title: "Knowledge trapped in one head", desc: "Critical business information lives with one person. When they are away, or when they leave, everything they know goes with them." },
-  { num: "05", title: "Content that never gets made", desc: "Social posts, emails, and website updates that should take minutes end up taking hours, or simply never happen at all." },
-  { num: "06", title: "Reporting stitched together manually", desc: "Numbers pulled from three different systems into a spreadsheet by hand. Reporting that should inform decisions just creates more work." }
-];
-
-const useCases = [
-  { tag: "Sales", title: "Enquiry assistant", desc: "Respond faster to common customer questions and route enquiries to the right person automatically." },
-  { tag: "Sales", title: "Quote and reminder automation", desc: "Draft quotes prepared automatically and reminders triggered on schedule. Nothing falls through the cracks." },
-  { tag: "Operations", title: "Admin workflow automation", desc: "Repetitive internal processes turned into structured workflows that run without supervision." },
-  { tag: "Knowledge", title: "Internal AI assistant", desc: "Staff ask questions and retrieve procedures, policies, or service information instantly. No digging required." },
-  { tag: "Marketing", title: "Content assistant", desc: "First drafts of social posts, emails, and campaign ideas generated from your existing business knowledge." },
-  { tag: "Finance", title: "Reporting automation", desc: "Manual spreadsheet work replaced with clear, consistent, automatically generated business reporting." }
-];
-
-const services = [
-  { idx: "S.01", title: "AI Opportunity Review", desc: "A focused review of your business to identify practical AI and automation opportunities, ranked by impact and feasibility." },
-  { idx: "S.02", title: "Workflow Automation", desc: "Design and implementation of automations for admin, enquiries, forms, reporting, and internal processes." },
-  { idx: "S.03", title: "AI Assistants", desc: "Custom AI assistants trained around your business information, procedures, documents, or customer questions." },
-  { idx: "S.04", title: "Website & Lead Systems", desc: "Improving how your website captures, qualifies, and responds to leads using modern automation." },
-  { idx: "S.05", title: "Staff AI Enablement", desc: "Helping business owners and teams use AI safely and effectively in their daily work." }
-];
-
-const faqs = [
-  { q: "Do I need to understand AI before working with you?", a: "No. The goal is to make AI practical and understandable. Most clients start with questions rather than answers, and that is exactly the right place to begin." },
-  { q: "Is this only for large businesses?", a: "No. Acceso AI is built specifically for small and medium businesses across Tasmania. The approach is designed around smaller teams, tighter budgets, and real operational constraints." },
-  { q: "What if AI isn't actually useful for my business?", a: "Then the honest recommendation is to not use it. The goal is to identify worthwhile opportunities, not to force AI into places it doesn't belong." },
-  { q: "Will this replace my staff?", a: "The focus is on reducing repetitive work and helping staff work more effectively, not replacing people. AI handles the tasks that burn people out, so your team can focus on the work that matters." },
-  { q: "Is my business data safe?", a: "Data handling depends on the tools and workflows used. Privacy and security are considered during every implementation, and recommendations are always made with your data obligations in mind." },
-  { q: "How do I start?", a: "Start with the free AI Opportunity Assessment. It takes about six minutes and produces a personalised report. If you already have a specific project in mind, contact Acceso AI directly." }
+  { num: "01", title: "Enquiries answered too slowly", desc: "Questions sit in inboxes while competitors reply first." },
+  { num: "02", title: "Staff repeating the same admin", desc: "Hours each week on tasks a system could run in minutes." },
+  { num: "03", title: "Quotes and reminders done by hand", desc: "Built from scratch, chased manually, or forgotten entirely." },
+  { num: "04", title: "Knowledge trapped in one head", desc: "When that person is away, everything they know goes with them." },
+  { num: "05", title: "Content that never gets made", desc: "Posts and emails that should take minutes take hours — or never happen." },
+  { num: "06", title: "Reporting stitched together manually", desc: "Numbers pulled from three systems into a spreadsheet by hand." }
 ];
 
 const marqueeItems = [
@@ -44,16 +18,11 @@ const marqueeItems = [
   "Based in Devonport, Tasmania"
 ];
 
-const siteUrl = "https://www.accesoai.com.au/";
-const pageTitle = "Acceso AI | Practical AI Consulting for Tasmanian Businesses";
-const pageDescription = "Acceso AI helps Tasmanian small and medium businesses save time, reduce admin, and improve operations with practical AI and automation systems.";
-const ogImage = new URL("/2021_Devonport_Aerial.width-1440.jpg", siteUrl).toString();
-
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "Acceso AI",
-  "url": siteUrl,
+  "url": "https://www.accesoai.com.au/",
   "description": "AI consulting and automation support for small businesses.",
   "areaServed": {
     "@type": "Place",
@@ -79,96 +48,29 @@ const jsonLd = {
 };
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={pageDescription} />
-    <meta name="keywords" content="AI consultant Tasmania, AI consultant Devonport, AI consulting for small business, business automation consultant Tasmania, workflow automation, practical AI" />
-    <title>{pageTitle}</title>
-    <link rel="canonical" href={siteUrl} />
-
-    <!-- Open Graph -->
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={pageDescription} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={siteUrl} />
-    <meta property="og:site_name" content="Acceso AI" />
-    <!-- TODO: replace with a dedicated 1200x630 branded OG image; this is the site's hero photo used as a placeholder -->
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="1440" />
-    <meta property="og:image:height" content="810" />
-    <meta property="og:image:alt" content="Aerial view of Devonport, Tasmania" />
-
-    <!-- Twitter / X -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={pageDescription} />
-    <meta name="twitter:image" content={ogImage} />
-
-    <!-- Structured data -->
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-  </head>
-
-  <body>
-    <!-- ═══ NAV ═══════════════════════════ -->
-    <nav class="nav" id="nav">
-      <div class="nav-inner">
-        <a href="/" class="wordmark">
-          <img src="/logo-mark.svg" alt="" class="wordmark-icon" width="32" height="32" />
-          <span class="wordmark-text">
-            <span class="wordmark-word">Acceso AI</span>
-            <span class="wordmark-tagline">AI Consulting</span>
-          </span>
-        </a>
-
-        <ul class="nav-links">
-          <li><a href="#problems">The Problem</a></li>
-          <li><a href="#approach">Approach</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#faq">FAQ</a></li>
-        </ul>
-
-        <div class="nav-actions">
-          <a href="mailto:Joel@bakerswalkingco.au" class="btn btn-line btn-sm">Contact</a>
-          <a href="https://accesoai.scoreapp.com/" target="_blank" rel="noopener" class="btn btn-ink btn-sm">Take the Assessment</a>
-        </div>
-
-        <button class="burger" id="burger" aria-label="Open menu">
-          <span></span><span></span>
-        </button>
-      </div>
-    </nav>
-
-    <div class="mobile-menu" id="mobile-menu">
-      <button class="mobile-close" id="mobile-close" aria-label="Close menu">&times;</button>
-      <a href="#problems">The Problem</a>
-      <a href="#approach">Approach</a>
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#faq">FAQ</a>
-      <a href="https://accesoai.scoreapp.com/" target="_blank" rel="noopener" class="btn btn-ink" style="margin-top:1.5rem; border-bottom:none; font-family:'Inter',sans-serif; font-size:0.9375rem; align-self:flex-start;">Take the Assessment</a>
-    </div>
-
-    <!-- ═══ 1 · HERO ══════════════════════ -->
+<Base
+  title="Acceso AI | Practical AI Consulting for Tasmanian Businesses"
+  description="Acceso AI helps Tasmanian small and medium businesses save time, reduce admin, and improve operations with practical AI and automation systems."
+  path="/"
+  jsonLd={jsonLd}
+>
+  <!-- ═══ 1 · HERO ══════════════════════ -->
+  <div class="hero-shell">
+    <canvas class="net-canvas" aria-hidden="true"></canvas>
     <header class="hero wrap" id="top">
       <div class="hero-meta hero-fade">
-        <span><span class="dot"></span>Devonport, Tasmania</span>
-        <span>AI &amp; Automation Consulting</span>
-        <span>For Tasmanian Small Business</span>
+        <span><span class="dot"></span><span data-scramble>Devonport, Tasmania</span></span>
+        <span data-scramble>AI &amp; Automation Consulting</span>
+        <span data-scramble>For Tasmanian Small Business</span>
       </div>
 
-      <h1 class="split" id="hero-title">
+      <h1 data-split="hero">
         Practical AI systems that make your business <em>easier to run.</em>
       </h1>
 
       <p class="hero-sub lede hero-fade">
-        Acceso AI helps Tasmanian small and medium businesses find the repetitive
-        work, customer bottlenecks, and missed opportunities hiding in their week,
-        then builds practical AI and automation systems to fix them.
+        We find the repetitive work hiding in your week, then build the
+        AI and automation systems that remove it.
       </p>
 
       <div class="hero-ctas hero-fade">
@@ -176,11 +78,11 @@ const jsonLd = {
           Take the Free Assessment
           <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
         </a>
-        <a href="mailto:Joel@bakerswalkingco.au" class="btn btn-line">Contact Acceso AI</a>
+        <a href="/services/" class="btn btn-line">Explore the Services</a>
       </div>
 
       <div class="flow hero-fade" aria-label="Example automated workflow">
-        <p class="flow-label">What an ordinary Tuesday looks like, automated</p>
+        <p class="flow-label">An ordinary Tuesday, automated</p>
         <div class="flow-track">
           <span class="flow-step lit"><span class="pip"></span>Enquiry received, 9:41 am</span>
           <span class="flow-arrow" aria-hidden="true">
@@ -194,559 +96,109 @@ const jsonLd = {
         </div>
       </div>
     </header>
+  </div>
 
-    <!-- ═══ HERO PHOTO BAND ═══════════════ -->
-    <div class="hero-band wrap" data-img-frame>
-      <div class="img-frame img-parallax img-reveal">
-        <img
-          src="/2021_Devonport_Aerial.width-1440.jpg"
-          alt="Aerial view of Devonport, Tasmania"
-          loading="lazy"
-        />
-      </div>
-      <p class="img-caption">Based in Devonport, Tasmania</p>
-    </div>
-
-    <!-- ═══ 2 · MARQUEE TRUST STRIP ═══════ -->
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee-inner">
-        <div class="marquee-group">
-          {marqueeItems.map((m) => <span class="marquee-item">{m}</span>)}
-        </div>
-        <div class="marquee-group">
-          {marqueeItems.map((m) => <span class="marquee-item">{m}</span>)}
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ 3 · PROBLEMS ══════════════════ -->
-    <section class="section wrap" id="problems">
-      <p class="eyebrow rv"><span class="idx">01</span> The Problem</p>
-      <h2 class="display rv" style="margin-bottom: clamp(2.5rem, 5vw, 4rem);">
-        Where is your business <em>losing time?</em>
-      </h2>
-
-      <div class="problem-list">
-        {problems.map((p) => (
-          <div class="problem-row rv">
-            <span class="problem-num">{p.num}</span>
-            <h3 class="problem-title">{p.title}</h3>
-            <p class="problem-desc">{p.desc}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- ═══ 4 · APPROACH ══════════════════ -->
-    <section class="section wrap" id="approach">
-      <div class="process-head">
-        <div>
-          <p class="eyebrow rv"><span class="idx">02</span> The Approach</p>
-          <h2 class="display rv">We find the bottlenecks, <em>then build the system.</em></h2>
-        </div>
-        <p class="lede rv" style="max-width: 34ch; font-size: 1rem;">
-          A straightforward process designed to move from conversation to
-          working system without overcomplicating things.
-        </p>
-      </div>
-
-      <div class="process-grid">
-        <div class="process-progress" id="process-progress"></div>
-
-        <div class="process-col rv" data-step>
-          <p class="process-num">No.1</p>
-          <h3>Assess</h3>
-          <p>We review your business processes and identify where AI or automation could make a meaningful difference. Not where it sounds impressive, but where it actually saves time or money.</p>
-        </div>
-
-        <div class="process-col rv" data-step>
-          <p class="process-num">No.2</p>
-          <h3>Prioritise</h3>
-          <p>We focus on the opportunities with the best mix of impact, cost, simplicity, and risk. Not every AI application is worth pursuing, so we help you pick the right ones first.</p>
-        </div>
-
-        <div class="process-col rv" data-step>
-          <p class="process-num">No.3</p>
-          <h3>Implement</h3>
-          <p>We build practical tools, workflows, automations, and AI systems your team can actually use. No abandoned prototypes, just working systems that fit your business.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ 5 · ASSESSMENT ════════════════ -->
-    <section class="assessment section" id="assessment">
-      <div class="wrap">
-        <p class="eyebrow rv"><span class="idx" style="color:#7FA3F0;">03</span> Free Opportunity Assessment</p>
-        <h2 class="rv">Find out where AI could <em>actually help</em> your business.</h2>
-        <p class="lede rv">
-          Not every business needs the same AI tools. The assessment identifies
-          where your business may be losing time, missing leads, or relying too
-          heavily on manual processes across four areas.
-        </p>
-
-        <div class="assess-stats">
-          <div class="assess-stat rv"><p class="val">6<em> min</em></p><p class="key">About six minutes to complete</p></div>
-          <div class="assess-stat rv"><p class="val">4<em> areas</em></p><p class="key">Sales · People · Finance · Systems</p></div>
-          <div class="assess-stat rv"><p class="val">1<em> report</em></p><p class="key">Personalised to your business</p></div>
-          <div class="assess-stat rv"><p class="val">$0</p><p class="key">Free, no obligation</p></div>
-        </div>
-
-        <div class="assess-ctas rv">
-          <a href="https://accesoai.scoreapp.com/" target="_blank" rel="noopener" class="btn btn-paper">
-            Take the Assessment
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-          </a>
-          <a href="#contact" class="btn btn-ghost-dark">Or make a direct enquiry</a>
-        </div>
-        <p class="assess-note rv">Every submission is reviewed personally. You'll only hear back if there's something genuinely worth doing.</p>
-      </div>
-    </section>
-
-    <!-- ═══ PHOTO INTERLUDE ═══════════════ -->
-    <div class="interlude" data-img-frame>
+  <!-- ═══ HERO PHOTO BAND ═══════════════ -->
+  <div class="hero-band wrap" data-img-frame>
+    <div class="img-frame img-parallax img-reveal">
       <img
-        data-optional
-        id="interlude-img"
-        src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2000&q=80"
-        alt="Colleagues laughing and joining hands over a desk in a modern office"
+        src="/2021_Devonport_Aerial.width-1440.jpg"
+        alt="Aerial view of Devonport, Tasmania"
         loading="lazy"
       />
-      <div class="interlude-caption">
-        <p>Less time on admin. More time for the work your team actually enjoys.</p>
+    </div>
+    <p class="img-caption">Based in Devonport, Tasmania</p>
+  </div>
+
+  <!-- ═══ 2 · MARQUEE TRUST STRIP ═══════ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-inner">
+      <div class="marquee-group">
+        {marqueeItems.map((m) => <span class="marquee-item">{m}</span>)}
+      </div>
+      <div class="marquee-group">
+        {marqueeItems.map((m) => <span class="marquee-item">{m}</span>)}
       </div>
     </div>
+  </div>
 
-    <!-- ═══ 6 · USE CASES ═════════════════ -->
-    <section class="section wrap" id="usecases">
-      <p class="eyebrow rv"><span class="idx">04</span> In Practice</p>
-      <h2 class="display rv" style="margin-bottom: clamp(2.5rem, 5vw, 4rem);">
-        Practical AI for <em>real Tasmanian businesses.</em>
-      </h2>
+  <!-- ═══ 3 · PROBLEMS ══════════════════ -->
+  <section class="section wrap" id="problems">
+    <p class="eyebrow rv"><span class="idx">01</span> <span data-scramble>The Problem</span></p>
+    <h2 class="display" data-split style="margin-bottom: clamp(2.5rem, 5vw, 4rem);">
+      Where is your business <em>losing time?</em>
+    </h2>
 
-      <div class="bento">
-        {useCases.map((u, i) => (
-          <div class="bento-cell rv">
-            <span class="cell-num">{String(i + 1).padStart(2, '0')}</span>
-            <span class="tag">{u.tag}</span>
-            <h3>{u.title}</h3>
-            <p>{u.desc}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- ═══ 7 · EXAMPLE OUTCOME ═══════════ -->
-    <section class="section wrap" id="outcome">
-      <p class="eyebrow rv"><span class="idx">05</span> Example Outcome</p>
-      <h2 class="display rv" style="margin-bottom: clamp(2.5rem, 5vw, 4rem);">
-        One workflow, <em>before and after.</em>
-      </h2>
-
-      <div class="outcome rv">
-        <div class="outcome-grid">
-          <div class="outcome-side before">
-            <p class="outcome-label">Before</p>
-            <ul class="outcome-list">
-              <li>Owner manually answers every enquiry</li>
-              <li>Quotes created from scratch, every time</li>
-              <li>Reminders happen inconsistently, if at all</li>
-              <li>No record of what was sent, or when</li>
-              <li>Hours lost to admin, every single week</li>
-            </ul>
-          </div>
-          <div class="outcome-side after">
-            <p class="outcome-label">After</p>
-            <ul class="outcome-list">
-              <li>AI drafts enquiry responses within minutes</li>
-              <li>Quote information prepared automatically</li>
-              <li>Reminders triggered by the system on schedule</li>
-              <li>Every interaction tracked and searchable</li>
-              <li>Owner focuses on decisions, not data entry</li>
-            </ul>
-          </div>
+    <div class="problem-list">
+      {problems.map((p) => (
+        <div class="problem-row rv">
+          <span class="problem-num">{p.num}</span>
+          <h3 class="problem-title">{p.title}</h3>
+          <p class="problem-desc">{p.desc}</p>
         </div>
-        <div class="outcome-result">
-          <span class="k">The Result</span>
-          <span class="v">Faster responses, less admin, fewer missed opportunities.</span>
-        </div>
-      </div>
+      ))}
+    </div>
+  </section>
 
-      <p class="rv" style="margin-top: 1.25rem; font-size: 0.8125rem; color: var(--muted);">
-        An illustrative scenario for a local service business. The same pattern applies to trades, professional services, tourism, retail, and hospitality right across Tasmania.
+  <!-- ═══ 4 · APPROACH ══════════════════ -->
+  <section class="section wrap" id="approach">
+    <div class="process-head">
+      <div>
+        <p class="eyebrow rv"><span class="idx">02</span> <span data-scramble>The Approach</span></p>
+        <h2 class="display" data-split>Find the bottlenecks, <em>then build the system.</em></h2>
+      </div>
+      <p class="lede rv" style="max-width: 34ch; font-size: 1rem;">
+        From conversation to working system, without the overcomplication.
       </p>
-    </section>
+    </div>
 
-    <!-- ═══ 8 · SERVICES ══════════════════ -->
-    <section class="section wrap" id="services">
-      <p class="eyebrow rv"><span class="idx">06</span> Services</p>
-      <h2 class="display rv" style="margin-bottom: clamp(2.5rem, 5vw, 4rem);">
-        Scoped around your business, <em>not a fixed product.</em>
-      </h2>
+    <div class="process-grid">
+      <div class="process-progress" id="process-progress"></div>
 
-      <div class="service-rows">
-        {services.map((s) => (
-          <div class="service-row rv">
-            <span class="service-idx">{s.idx}</span>
-            <h3>{s.title}</h3>
-            <p>{s.desc}</p>
-            <span class="service-go" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-            </span>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- ═══ 9 · ABOUT ═════════════════════ -->
-    <section class="about section" id="about">
-      <div class="wrap">
-        <p class="eyebrow rv"><span class="idx">07</span> Who You're Working With</p>
-
-        <div class="about-grid">
-          <div class="about-media">
-            <div class="img-frame img-reveal rv-l" data-img-frame>
-              <img
-                src="/joel-badcock.jpg"
-                alt="Joel Badcock standing on a granite summit in Tasmania"
-                loading="lazy"
-              />
-            </div>
-            <p class="about-quote rv-l">
-              People buy consultants, not faceless companies. So here's exactly who you'd be dealing with.
-            </p>
-          </div>
-
-          <div class="about-body">
-            <p class="rv">
-              Acceso AI is led by Joel Badcock, an AI and automation practitioner
-              based in Devonport on Tasmania's North West Coast. Joel spent three
-              years leading AI and automation work at Devonport City Council,
-              translating what was happening at the frontier into systems that
-              actually ran inside a real organisation.
-            </p>
-            <p class="rv">
-              He also runs Bakers Walking Company, so he knows what it's like to be
-              on the other side of the table: the invoices, the staff, the decisions
-              made with incomplete information.
-            </p>
-            <p class="rv">
-              Acceso AI exists because most Tasmanian small businesses can't afford
-              to hire an AI team, and they don't need one. They need someone who
-              understands the technology, has run a business, and will tell them the
-              truth about what's worth doing and what isn't.
-            </p>
-
-            <div class="about-sign rv">
-              <span class="name">Joel Badcock</span>
-              <span class="role">Founder, Acceso AI</span>
-            </div>
-
-            <ul class="about-facts rv">
-              <li>Based in Tasmania</li>
-              <li>AI &amp; Automation Officer</li>
-              <li>Business owner</li>
-              <li>Builds the systems himself</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ 10 · FAQ ══════════════════════ -->
-    <section class="section wrap" id="faq">
-      <p class="eyebrow rv"><span class="idx">08</span> Common Questions</p>
-      <h2 class="display rv" style="margin-bottom: clamp(2.5rem, 5vw, 4rem);">
-        Asked often, <em>answered honestly.</em>
-      </h2>
-
-      <div class="faq-wrap">
-        {faqs.map((f) => (
-          <div class="faq-item rv" data-faq>
-            <button class="faq-q" type="button" aria-expanded="false">
-              <h3>{f.q}</h3>
-              <span class="faq-x" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
-              </span>
-            </button>
-            <div class="faq-a"><p>{f.a}</p></div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- ═══ 11 · FINAL CTA ════════════════ -->
-    <section class="finale section" id="contact">
-      <div class="wrap">
-        <p class="eyebrow rv">Get Started</p>
-        <h2 class="rv">Stop guessing about AI. <em>Start knowing.</em></h2>
-        <p class="lede rv">
-          Take the free assessment and receive a practical report showing where
-          your business could save time, reduce admin, or improve operations.
-          Working with businesses across Devonport, Burnie, Launceston, and Hobart.
-        </p>
-        <div class="finale-ctas rv">
-          <a href="https://accesoai.scoreapp.com/" target="_blank" rel="noopener" class="btn btn-paper">
-            Take the AI Opportunity Assessment
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-          </a>
-          <a href="mailto:Joel@bakerswalkingco.au" class="btn btn-ghost-dark">Contact Acceso AI</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ FOOTER ════════════════════════ -->
-    <footer class="footer">
-      <div class="wrap">
-        <div class="footer-cols">
-          <div>
-            <a href="#top" class="wordmark">
-              <img src="/logo-mark.svg" alt="" class="wordmark-icon" width="32" height="32" />
-              <span class="wordmark-text">
-                <span class="wordmark-word">Acceso AI</span>
-                <span class="wordmark-tagline">AI Consulting</span>
-              </span>
-            </a>
-            <p class="footer-desc">
-              Practical AI and automation consulting for Tasmanian small and
-              medium businesses. Based in Devonport, working across the state.
-            </p>
-          </div>
-          <div>
-            <h4>Navigate</h4>
-            <ul>
-              <li><a href="#problems">The Problem</a></li>
-              <li><a href="#approach">Approach</a></li>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#faq">FAQ</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Connect</h4>
-            <ul>
-              <li><a href="https://accesoai.scoreapp.com/" target="_blank" rel="noopener">Take the Assessment</a></li>
-              <li><a href="mailto:Joel@bakerswalkingco.au">Joel@bakerswalkingco.au</a></li>
-            </ul>
-          </div>
-        </div>
+      <div class="process-col rv" data-step>
+        <p class="process-num">No.1</p>
+        <h3>Assess</h3>
+        <p>A review of how your business runs, to find where AI would genuinely save time or money.</p>
       </div>
 
-      <p class="footer-mark" aria-hidden="true">Acceso AI</p>
-
-      <div class="wrap">
-        <div class="footer-legal">
-          <p>&copy; 2026 Acceso AI. All rights reserved.</p>
-          <p>Devonport, Tasmania</p>
-        </div>
+      <div class="process-col rv" data-step>
+        <p class="process-num">No.2</p>
+        <h3>Prioritise</h3>
+        <p>Opportunities ranked by impact, cost, and risk. The right ones first.</p>
       </div>
-    </footer>
 
-    <!-- ═══ SCRIPTS ═══════════════════════ -->
-    <script>
-      import { gsap } from 'gsap';
-      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+      <div class="process-col rv" data-step>
+        <p class="process-num">No.3</p>
+        <h3>Implement</h3>
+        <p>Working systems your team actually uses. No abandoned prototypes.</p>
+      </div>
+    </div>
+  </section>
 
-      gsap.registerPlugin(ScrollTrigger);
+  <!-- ═══ 5 · ASSESSMENT ════════════════ -->
+  <section class="assessment section" id="assessment">
+    <div class="wrap">
+      <p class="eyebrow rv"><span class="idx" style="color:#7FA3F0;">03</span> <span data-scramble>Free Opportunity Assessment</span></p>
+      <h2 data-split>Find out where AI could <em>actually help.</em></h2>
+      <p class="lede rv">
+        Six minutes. Four areas of your business. One personalised report.
+      </p>
 
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReduced) document.documentElement.classList.add('motion-off');
+      <div class="assess-stats">
+        <div class="assess-stat rv"><p class="val"><span data-count="6">0</span><em> min</em></p><p class="key">To complete</p></div>
+        <div class="assess-stat rv"><p class="val"><span data-count="4">0</span><em> areas</em></p><p class="key">Sales · People · Finance · Systems</p></div>
+        <div class="assess-stat rv"><p class="val"><span data-count="1">0</span><em> report</em></p><p class="key">Personalised to your business</p></div>
+        <div class="assess-stat rv"><p class="val">$0</p><p class="key">Free, no obligation</p></div>
+      </div>
 
-      // ── Nav scroll state ──────────────────
-      const nav = document.getElementById('nav');
-      if (nav) {
-        window.addEventListener('scroll', () => {
-          nav.classList.toggle('scrolled', window.scrollY > 32);
-        }, { passive: true });
-      }
-
-      // ── Mobile menu ───────────────────────
-      const burger = document.getElementById('burger');
-      const menu = document.getElementById('mobile-menu');
-      const closeBtn = document.getElementById('mobile-close');
-      if (burger && menu && closeBtn) {
-        burger.addEventListener('click', () => menu.classList.add('open'));
-        closeBtn.addEventListener('click', () => menu.classList.remove('open'));
-        menu.querySelectorAll('a').forEach(a =>
-          a.addEventListener('click', () => menu.classList.remove('open'))
-        );
-      }
-
-      // ── Split hero headline into words ────
-      const splitWords = (root: HTMLElement) => {
-        const textNodes: Text[] = [];
-        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-        while (walker.nextNode()) textNodes.push(walker.currentNode as Text);
-
-        textNodes.forEach(tn => {
-          const parts = (tn.textContent || '').split(/(\s+)/).filter(Boolean);
-          if (!parts.length) return;
-          const frag = document.createDocumentFragment();
-          parts.forEach(part => {
-            if (/^\s+$/.test(part)) {
-              frag.appendChild(document.createTextNode(' '));
-            } else {
-              const mask = document.createElement('span');
-              mask.className = 'w-mask';
-              const w = document.createElement('span');
-              w.className = 'w';
-              w.textContent = part;
-              mask.appendChild(w);
-              frag.appendChild(mask);
-            }
-          });
-          tn.replaceWith(frag);
-        });
-
-        return root.querySelectorAll<HTMLElement>('.w');
-      };
-
-      const heroTitle = document.getElementById('hero-title');
-
-      if (!prefersReduced && heroTitle) {
-        const words = splitWords(heroTitle);
-        const tl = gsap.timeline({ delay: 0.15 });
-        tl.to(words, {
-          y: 0,
-          duration: 1.1,
-          stagger: 0.055,
-          ease: 'power4.out'
-        });
-        tl.to('.hero-fade', {
-          opacity: 1,
-          duration: 0.9,
-          stagger: 0.12,
-          ease: 'power2.out'
-        }, '-=0.7');
-      } else {
-        document.querySelectorAll<HTMLElement>('.hero-fade').forEach(el => { el.style.opacity = '1'; });
-        if (heroTitle) heroTitle.classList.remove('split');
-      }
-
-      // ── Scroll reveals ────────────────────
-      if (!prefersReduced) {
-        gsap.utils.toArray<HTMLElement>('.rv').forEach(el => {
-          gsap.to(el, {
-            opacity: 1, y: 0,
-            duration: 0.85,
-            ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-          });
-        });
-
-        gsap.utils.toArray<HTMLElement>('.rv-l').forEach(el => {
-          gsap.to(el, {
-            opacity: 1, x: 0,
-            duration: 0.85,
-            ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-          });
-        });
-
-        // Photo clip reveals
-        gsap.utils.toArray<HTMLElement>('.img-reveal').forEach(el => {
-          gsap.to(el, {
-            clipPath: 'inset(0% 0% 0% 0%)',
-            duration: 1.3,
-            ease: 'power3.inOut',
-            scrollTrigger: { trigger: el, start: 'top 85%', once: true }
-          });
-        });
-
-        // Gentle parallax inside framed photos
-        gsap.utils.toArray<HTMLElement>('.img-parallax img').forEach(img => {
-          gsap.fromTo(img,
-            { yPercent: -5 },
-            {
-              yPercent: 5,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: img.closest('.img-frame'),
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 0.5
-              }
-            }
-          );
-        });
-
-        // Full width interlude parallax
-        const interludeImg = document.getElementById('interlude-img');
-        if (interludeImg) {
-          gsap.fromTo(interludeImg,
-            { yPercent: 0 },
-            {
-              yPercent: -14,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: '.interlude',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 0.5
-              }
-            }
-          );
-        }
-
-        // Process progress line draws across as you scroll the section
-        const progress = document.getElementById('process-progress');
-        if (progress) {
-          gsap.to(progress, {
-            scaleX: 1,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: '.process-grid',
-              start: 'top 80%',
-              end: 'bottom 45%',
-              scrub: 0.6
-            }
-          });
-        }
-
-        // Highlight step numbers in sequence
-        gsap.utils.toArray<HTMLElement>('[data-step]').forEach((col, i) => {
-          ScrollTrigger.create({
-            trigger: col,
-            start: 'top 70%',
-            once: true,
-            onEnter: () => {
-              setTimeout(() => col.classList.add('active'), i * 220);
-            }
-          });
-        });
-      } else {
-        document.querySelectorAll<HTMLElement>('.rv, .rv-l').forEach(el => {
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-        });
-        document.querySelectorAll('[data-step]').forEach(c => c.classList.add('active'));
-      }
-
-      // ── Hide photo bands whose image fails to load ──
-      document.querySelectorAll<HTMLImageElement>('img[data-optional]').forEach(img => {
-        const hideBand = () => {
-          img.closest<HTMLElement>('[data-img-frame]')?.classList.add('img-missing');
-          ScrollTrigger.refresh();
-        };
-        if (img.complete && img.naturalWidth === 0) hideBand();
-        img.addEventListener('error', hideBand);
-      });
-
-      // ── FAQ accordion ─────────────────────
-      document.querySelectorAll<HTMLElement>('[data-faq]').forEach(item => {
-        const btn = item.querySelector<HTMLButtonElement>('.faq-q');
-        if (!btn) return;
-        btn.addEventListener('click', () => {
-          const isOpen = item.classList.contains('open');
-          document.querySelectorAll('[data-faq].open').forEach(i => {
-            i.classList.remove('open');
-            i.querySelector('.faq-q')?.setAttribute('aria-expanded', 'false');
-          });
-          if (!isOpen) {
-            item.classList.add('open');
-            btn.setAttribute('aria-expanded', 'true');
-          }
-        });
-      });
-    </script>
-  </body>
-</html>
+      <div class="assess-ctas rv">
+        <a href="https://accesoai.scoreapp.com/" target="_blank" rel="noopener" class="btn btn-paper">
+          Take the Assessment
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+        </a>
+        <a href="mailto:Joel@bakerswalkingco.au" class="btn btn-ghost-dark">Or make a direct enquiry</a>
+      </div>
+      <p class="assess-note rv">Every submission is reviewed personally.</p>
+    </div>
+  </section>
+</Base>
