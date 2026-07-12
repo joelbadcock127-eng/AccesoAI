@@ -1,0 +1,671 @@
+---
+import { isAuthed } from '../lib/admin/auth';
+
+export const prerender = false;
+
+const authed = isAuthed(Astro.cookies);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Acceso AI · Content Editor</title>
+    <style is:global>
+      :root {
+        --bg: #f6f4ef;
+        --panel: #ffffff;
+        --ink: #1a1815;
+        --muted: #77705f;
+        --line: #e3ddd0;
+        --accent: #2c5cc5;
+        --accent-soft: #e8edf9;
+        --amber: #a05e12;
+        --amber-soft: #fdf3e4;
+        --green: #1f7a3d;
+        --green-soft: #e6f4ea;
+        --red: #b3341f;
+        --red-soft: #fbeae6;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { height: 100%; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        font-size: 14px;
+      }
+      button { font: inherit; cursor: pointer; }
+      input, textarea, select { font: inherit; color: inherit; }
+
+      /* ── Login ─────────────────────────── */
+      .login-wrap {
+        min-height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+      .login-card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 2.25rem;
+        width: 100%;
+        max-width: 360px;
+        box-shadow: 0 10px 30px rgba(26, 24, 21, 0.06);
+      }
+      .login-card h1 { font-size: 1.15rem; margin-bottom: 0.35rem; }
+      .login-card p { color: var(--muted); margin-bottom: 1.4rem; }
+      .login-card input {
+        width: 100%;
+        padding: 0.65rem 0.75rem;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        margin-bottom: 0.85rem;
+        background: #fff;
+      }
+      .login-card input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+      .login-card button {
+        width: 100%;
+        padding: 0.65rem;
+        border: none;
+        border-radius: 6px;
+        background: var(--ink);
+        color: #fff;
+        font-weight: 600;
+      }
+      .login-error {
+        display: none;
+        background: var(--red-soft);
+        color: var(--red);
+        border-radius: 6px;
+        padding: 0.6rem 0.75rem;
+        margin-bottom: 0.85rem;
+      }
+
+      /* ── Editor shell ──────────────────── */
+      .shell { display: flex; flex-direction: column; height: 100vh; }
+      .topbar {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.55rem 0.9rem;
+        background: var(--panel);
+        border-bottom: 1px solid var(--line);
+        flex: none;
+      }
+      .topbar .brand { font-weight: 700; font-size: 0.95rem; }
+      .topbar select {
+        padding: 0.4rem 0.55rem;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fff;
+      }
+      .badge {
+        font-size: 0.72rem;
+        padding: 0.2rem 0.55rem;
+        border-radius: 99px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        white-space: nowrap;
+      }
+      .badge.warn { background: var(--amber-soft); color: var(--amber); }
+      .topbar .spacer { flex: 1; }
+      .btn-save {
+        padding: 0.45rem 1.1rem;
+        border: none;
+        border-radius: 6px;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 600;
+      }
+      .btn-save:disabled { background: #b9b2a2; cursor: default; }
+      .btn-quiet {
+        padding: 0.45rem 0.8rem;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fff;
+        color: var(--muted);
+      }
+
+      .main { display: flex; flex: 1; min-height: 0; }
+      .panel {
+        width: 400px;
+        flex: none;
+        display: flex;
+        flex-direction: column;
+        background: var(--panel);
+        border-right: 1px solid var(--line);
+        min-height: 0;
+      }
+      .fields-scroll { flex: 1; overflow-y: auto; padding: 0.6rem 0.75rem 1.2rem; }
+      .panel details {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        margin-bottom: 0.6rem;
+        background: #fff;
+      }
+      .panel summary {
+        cursor: pointer;
+        padding: 0.55rem 0.75rem;
+        font-weight: 600;
+        font-size: 0.82rem;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        user-select: none;
+      }
+      .panel summary::before { content: '▸'; color: var(--muted); transition: transform 0.15s; }
+      .panel details[open] summary::before { transform: rotate(90deg); }
+      .panel summary .count {
+        margin-left: auto;
+        color: var(--muted);
+        font-weight: 400;
+        font-size: 0.72rem;
+      }
+      .group-fields { padding: 0.15rem 0.75rem 0.7rem; }
+
+      .field { padding: 0.45rem 0; border-top: 1px dashed var(--line); position: relative; }
+      .field:first-child { border-top: none; }
+      .field label {
+        display: flex;
+        gap: 0.4rem;
+        align-items: baseline;
+        font-size: 0.68rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.3rem;
+      }
+      .field.dirty label::after {
+        content: 'edited';
+        color: var(--amber);
+        background: var(--amber-soft);
+        border-radius: 4px;
+        padding: 0.05rem 0.35rem;
+        text-transform: none;
+        letter-spacing: 0;
+      }
+      .field textarea, .field input[type='url'], .field input[type='text'] {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 0.45rem 0.55rem;
+        background: #fff;
+        resize: none;
+        overflow: hidden;
+        line-height: 1.45;
+      }
+      .field textarea:focus, .field input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+      .field.dirty textarea, .field.dirty input { border-color: var(--amber); background: #fffdf7; }
+      .field .thumb {
+        display: block;
+        max-width: 100%;
+        max-height: 110px;
+        border-radius: 6px;
+        border: 1px solid var(--line);
+        margin-bottom: 0.4rem;
+        object-fit: cover;
+      }
+      .field .caption { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.4rem; font-style: italic; }
+      .field.flash { animation: fieldflash 1.4s ease; }
+      @keyframes fieldflash {
+        0%, 60% { background: var(--accent-soft); box-shadow: 0 0 0 4px var(--accent-soft); }
+        100% { background: transparent; box-shadow: none; }
+      }
+
+      /* ── Save status ───────────────────── */
+      .status {
+        flex: none;
+        border-top: 1px solid var(--line);
+        padding: 0.7rem 0.9rem;
+        background: #fbfaf7;
+        display: none;
+      }
+      .status.visible { display: block; }
+      .status .bar {
+        height: 5px;
+        border-radius: 99px;
+        background: var(--line);
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+      }
+      .status .bar > div {
+        height: 100%;
+        width: 0%;
+        border-radius: 99px;
+        background: var(--accent);
+        transition: width 0.6s ease;
+      }
+      .status.live .bar > div { background: var(--green); }
+      .status.error .bar > div { background: var(--red); }
+      .status .text { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+      .status.live .text { color: var(--green); }
+      .status.error .text { color: var(--red); }
+      .status .warn-line { color: var(--amber); font-size: 0.78rem; margin-top: 0.3rem; }
+
+      .preview-pane { flex: 1; min-width: 0; background: #d9d4c7; padding: 0.9rem; }
+      .preview-pane iframe {
+        width: 100%;
+        height: 100%;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+      .loading-note { padding: 1rem; color: var(--muted); }
+    </style>
+  </head>
+
+  <body>
+    {
+      !authed ? (
+        <div class="login-wrap">
+          <form class="login-card" id="login-form">
+            <h1>Content Editor</h1>
+            <p>Enter the admin password to edit the site.</p>
+            <div class="login-error" id="login-error"></div>
+            <input type="password" id="password" name="password" placeholder="Password" autocomplete="current-password" autofocus />
+            <button type="submit">Log in</button>
+          </form>
+        </div>
+      ) : (
+        <div class="shell">
+          <div class="topbar">
+            <span class="brand">Acceso AI · Editor</span>
+            <select id="page-picker" title="Page"></select>
+            <span class="badge" id="mode-badge">…</span>
+            <span class="spacer"></span>
+            <button class="btn-save" id="save-btn" disabled>Save</button>
+            <button class="btn-quiet" id="logout-btn">Log out</button>
+          </div>
+          <div class="main">
+            <aside class="panel">
+              <div class="fields-scroll" id="fields">
+                <p class="loading-note">Loading fields…</p>
+              </div>
+              <div class="status" id="status">
+                <div class="bar"><div id="status-bar"></div></div>
+                <div class="text" id="status-text"></div>
+                <div class="warn-line" id="status-warn" style="display:none"></div>
+              </div>
+            </aside>
+            <section class="preview-pane">
+              <iframe id="preview" title="Page preview" />
+            </section>
+          </div>
+        </div>
+      )
+    }
+
+    <script is:inline>
+      if (document.getElementById('login-form')) {
+
+        const form = document.getElementById('login-form');
+        const errBox = document.getElementById('login-error');
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          errBox.style.display = 'none';
+          try {
+            const res = await fetch('/api/admin/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ password: document.getElementById('password').value }),
+            });
+            const data = await res.json();
+            if (res.ok && data.ok) location.reload();
+            else {
+              errBox.textContent = data.error || 'Login failed — try again.';
+              errBox.style.display = 'block';
+            }
+          } catch {
+            errBox.textContent = 'Network error — try again.';
+            errBox.style.display = 'block';
+          }
+        });
+            }
+    </script>
+
+    <script is:inline>
+      if (document.getElementById('page-picker')) {
+
+        (() => {
+          const $ = (id) => document.getElementById(id);
+          const picker = $('page-picker');
+          const fieldsEl = $('fields');
+          const iframe = $('preview');
+          const saveBtn = $('save-btn');
+          const modeBadge = $('mode-badge');
+          const statusEl = $('status');
+          const statusBar = $('status-bar');
+          const statusText = $('status-text');
+          const statusWarn = $('status-warn');
+
+          let meta = null;          // /api/admin/pages response
+          let fields = [];          // current page's fields
+          const dirty = new Map();  // fieldKey -> field
+          let currentRoute = '/';
+          let previewReady = false;
+          let saving = false;
+          let pollTimer = null;
+          let pollStart = 0;
+
+          const short = (sha) => (sha ? String(sha).slice(0, 7) : '?');
+          const fieldKey = (f) => f.domId + (f.kind === 'text' ? ':' + f.childIndex : ':img');
+
+          // ── Auth-aware fetch ──────────────
+          async function api(path, opts) {
+            const res = await fetch(path, opts);
+            if (res.status === 401) { location.reload(); throw new Error('unauthorized'); }
+            return res;
+          }
+
+          // ── Preview messaging ─────────────
+          function postToPreview(msg) {
+            if (previewReady && iframe.contentWindow) {
+              iframe.contentWindow.postMessage(msg, location.origin);
+            }
+          }
+          function replayDirty() {
+            for (const f of dirty.values()) {
+              postToPreview({ type: 'edit', domId: f.domId, childIndex: f.childIndex, kind: f.kind, value: f.current });
+            }
+          }
+          window.addEventListener('message', (e) => {
+            if (e.origin !== location.origin || !e.data) return;
+            if (e.data.type === 'preview-ready') {
+              previewReady = true;
+              replayDirty(); // edits made while the preview was loading (spec §4.3)
+            }
+            if (e.data.type === 'select') locateField(e.data.candidates || []);
+          });
+
+          // ── Field panel ───────────────────
+          function autosize(ta) {
+            ta.style.height = 'auto';
+            ta.style.height = ta.scrollHeight + 2 + 'px';
+          }
+
+          function markDirty(f) {
+            const key = fieldKey(f);
+            const changed = f.current !== f.value;
+            if (changed) dirty.set(key, f); else dirty.delete(key);
+            f.el.classList.toggle('dirty', changed);
+            saveBtn.disabled = dirty.size === 0 || saving;
+            saveBtn.textContent = dirty.size ? `Save ${dirty.size} change${dirty.size === 1 ? '' : 's'}` : 'Save';
+          }
+
+          function renderFields() {
+            fieldsEl.textContent = '';
+            // Group consecutive fields sharing a section label (document order).
+            const groups = [];
+            for (const f of fields) {
+              const last = groups[groups.length - 1];
+              if (last && last.label === f.group) last.items.push(f);
+              else groups.push({ label: f.group, items: [f] });
+            }
+            for (const g of groups) {
+              const details = document.createElement('details');
+              details.open = true;
+              const summary = document.createElement('summary');
+              summary.textContent = g.label + ' ';
+              const count = document.createElement('span');
+              count.className = 'count';
+              count.textContent = g.items.length + ' field' + (g.items.length === 1 ? '' : 's');
+              summary.appendChild(count);
+              details.appendChild(summary);
+              const wrap = document.createElement('div');
+              wrap.className = 'group-fields';
+              for (const f of g.items) wrap.appendChild(renderField(f));
+              details.appendChild(wrap);
+              fieldsEl.appendChild(details);
+            }
+          }
+
+          function renderField(f) {
+            const div = document.createElement('div');
+            div.className = 'field';
+            div.dataset.key = fieldKey(f);
+            f.el = div;
+            f.current = f.value;
+
+            const label = document.createElement('label');
+            label.textContent = f.kind === 'image' ? 'image · url' : f.tag;
+            div.appendChild(label);
+
+            if (f.kind === 'image') {
+              const thumb = document.createElement('img');
+              thumb.className = 'thumb';
+              thumb.src = f.value;
+              thumb.alt = '';
+              div.appendChild(thumb);
+              if (f.alt) {
+                const cap = document.createElement('div');
+                cap.className = 'caption';
+                cap.textContent = f.alt;
+                div.appendChild(cap);
+              }
+              const input = document.createElement('input');
+              input.type = 'url';
+              input.value = f.value;
+              input.addEventListener('input', () => {
+                f.current = input.value;
+                thumb.src = input.value;
+                markDirty(f);
+                postToPreview({ type: 'edit', domId: f.domId, kind: 'image', value: f.current });
+              });
+              f.input = input;
+              div.appendChild(input);
+            } else {
+              const ta = document.createElement('textarea');
+              ta.rows = 1;
+              ta.value = f.value;
+              ta.addEventListener('input', () => {
+                f.current = ta.value;
+                autosize(ta);
+                markDirty(f);
+                postToPreview({ type: 'edit', domId: f.domId, childIndex: f.childIndex, kind: 'text', value: f.current });
+              });
+              f.input = ta;
+              div.appendChild(ta);
+              requestAnimationFrame(() => autosize(ta));
+            }
+            return div;
+          }
+
+          // Click on the preview → reveal + focus the field (spec §4.4).
+          function locateField(candidates) {
+            for (const domId of candidates) {
+              const f = fields.find((x) => x.domId === domId);
+              if (!f || !f.el) continue;
+              const details = f.el.closest('details');
+              if (details) details.open = true;
+              f.el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+              f.el.classList.remove('flash');
+              void f.el.offsetWidth; // restart animation
+              f.el.classList.add('flash');
+              f.input.focus({ preventScroll: true });
+              return;
+            }
+          }
+
+          // ── Page load ─────────────────────
+          async function loadMeta() {
+            const res = await api('/api/admin/pages');
+            meta = await res.json();
+            picker.textContent = '';
+            for (const p of meta.pages) {
+              const opt = document.createElement('option');
+              opt.value = p.route;
+              opt.textContent = `${p.title} (${p.route})`;
+              picker.appendChild(opt);
+            }
+            if (meta.mode === 'local') {
+              modeBadge.textContent = 'dev · saves to local files';
+              modeBadge.className = 'badge warn';
+            } else if (meta.mode === 'bundled') {
+              modeBadge.textContent = 'read-only · GITHUB_TOKEN missing';
+              modeBadge.className = 'badge warn';
+            } else {
+              modeBadge.textContent = `commits to ${meta.branch}`;
+              modeBadge.className = 'badge';
+            }
+          }
+
+          async function loadPage(route) {
+            currentRoute = route;
+            dirty.clear();
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Save';
+            fieldsEl.innerHTML = '<p class="loading-note">Loading fields…</p>';
+            previewReady = false;
+            iframe.src = '/api/admin/preview?page=' + encodeURIComponent(route);
+            const res = await api('/api/admin/content?page=' + encodeURIComponent(route));
+            const data = await res.json();
+            fields = data.fields;
+            renderFields();
+          }
+
+          picker.addEventListener('change', () => {
+            if (dirty.size && !confirm('You have unsaved changes. Switch pages and discard them?')) {
+              picker.value = currentRoute;
+              return;
+            }
+            stopPolling();
+            statusEl.className = 'status';
+            loadPage(picker.value);
+          });
+
+          window.addEventListener('beforeunload', (e) => {
+            if (dirty.size) { e.preventDefault(); e.returnValue = ''; }
+          });
+
+          $('logout-btn').addEventListener('click', async () => {
+            if (dirty.size && !confirm('You have unsaved changes. Log out and discard them?')) return;
+            dirty.clear();
+            await fetch('/api/admin/logout', { method: 'POST' });
+            location.reload();
+          });
+
+          // ── Save + verifiable deploy tracking (spec §2.5) ──
+          function setStatus(kind, pct, text, warn) {
+            statusEl.className = 'status visible' + (kind ? ' ' + kind : '');
+            statusBar.style.width = pct + '%';
+            statusText.textContent = text;
+            statusWarn.style.display = warn ? 'block' : 'none';
+            statusWarn.textContent = warn || '';
+          }
+          function stopPolling() {
+            if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+          }
+          const encodeForHtml = (s) =>
+            s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+          function trackDeploy(resp, savedTexts) {
+            stopPolling();
+            pollStart = Date.now();
+            const target = resp.lastCommit;
+            const branchWarn =
+              resp.servingBranch && resp.servingBranch !== 'dev' && resp.servingBranch !== resp.branch
+                ? `Heads up: this URL serves deployments of "${resp.servingBranch}" but the edit was committed to "${resp.branch}" — it may never appear here.`
+                : '';
+            setStatus('', 8, `Committed ${short(target)} to ${resp.branch}. Waiting for the build… deploys typically take 1–5 minutes and can queue.`, branchWarn);
+
+            const poll = async () => {
+              const elapsed = Math.round((Date.now() - pollStart) / 1000);
+              try {
+                const res = await fetch(currentRoute + '?live-check=' + Date.now(), { cache: 'no-store' });
+                const html = await res.text();
+                const m = html.match(/name="x-build-commit" content="([^"]*)"/);
+                const serving = m ? m[1] : null;
+                const valuesLive = savedTexts.length > 0 && savedTexts.every((t) => html.includes(encodeForHtml(t)));
+                if ((target && serving === target) || valuesLive) {
+                  stopPolling();
+                  setStatus('live', 100, `Live ✓ — your changes are now being served at ${location.origin}${currentRoute} (build ${short(serving || target)}).`, branchWarn);
+                  return;
+                }
+                if (elapsed > 600) {
+                  stopPolling();
+                  setStatus('error', 100, `Not live after 10 minutes (still serving ${short(serving)}). Two likely causes: the build failed (check the Vercel dashboard), or this URL deploys from a different branch than "${resp.branch}".`, '');
+                  return;
+                }
+                const pct = Math.min(90, 8 + (elapsed / 300) * 82);
+                const mins = Math.floor(elapsed / 60), secs = elapsed % 60;
+                setStatus('', pct, `Building… currently serving ${short(serving)}, waiting for ${short(target)} · ${mins}m ${String(secs).padStart(2, '0')}s elapsed.`, branchWarn);
+              } catch {
+                /* transient network error — keep polling */
+              }
+            };
+            poll();
+            pollTimer = setInterval(poll, 8000);
+          }
+
+          saveBtn.addEventListener('click', async () => {
+            if (!dirty.size || saving) return;
+            saving = true;
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving…';
+            const edits = [...dirty.values()].map((f) => ({
+              file: f.file,
+              id: f.id,
+              childIndex: f.childIndex,
+              kind: f.kind,
+              value: f.current,
+              baseline: f.value,
+            }));
+            const savedTexts = edits.filter((e) => e.kind === 'text' && e.value.trim().length > 3).map((e) => e.value);
+            setStatus('', 4, 'Saving — committing your edits…', '');
+            try {
+              const res = await api('/api/admin/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ page: currentRoute, edits }),
+              });
+              const data = await res.json();
+              if (!res.ok) {
+                setStatus('error', 100, data.error || 'Save failed.', '');
+                return;
+              }
+              // Save succeeded: new baselines, clear dirty state (spec §4.5).
+              for (const f of dirty.values()) { f.value = f.current; f.el.classList.remove('dirty'); }
+              dirty.clear();
+              saveBtn.textContent = 'Save';
+              if (data.skipped && data.skipped.length) {
+                setStatus('error', 100, `Saved ${data.applied} change(s), but ${data.skipped.length} could not be applied (content changed underneath). Reload to see the latest content.`, '');
+              }
+              if (data.mode === 'local') {
+                setStatus('live', 100, `Saved ${data.applied} change(s) to the local content files (dev mode — no commit, no deploy).`, '');
+                return;
+              }
+              if (!(data.skipped && data.skipped.length)) {
+                trackDeploy(data, savedTexts);
+              }
+            } catch (err) {
+              setStatus('error', 100, 'Save failed: ' + (err && err.message ? err.message : err), '');
+            } finally {
+              saving = false;
+              saveBtn.disabled = dirty.size === 0;
+            }
+          });
+
+          // ── Boot ──────────────────────────
+          (async () => {
+            try {
+              await loadMeta();
+              await loadPage(meta.pages[0].route);
+            } catch (err) {
+              fieldsEl.innerHTML = '';
+              const p = document.createElement('p');
+              p.className = 'loading-note';
+              p.textContent = 'Failed to load the editor: ' + (err && err.message ? err.message : err);
+              fieldsEl.appendChild(p);
+            }
+          })();
+        })();
+            }
+    </script>
+  </body>
+</html>

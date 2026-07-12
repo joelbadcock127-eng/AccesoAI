@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
+import headerHtml from '../content/partials/header.html?raw';
+import footerHtml from '../content/partials/footer.html?raw';
 
 interface Props {
   title: string;
@@ -15,14 +17,9 @@ const siteUrl = 'https://www.accesoai.com.au';
 const canonical = siteUrl + path;
 const ogImage = `${siteUrl}/2021_Devonport_Aerial.width-1440.jpg`;
 
-const links = [
-  { href: '/', label: 'Home' },
-  { href: '/services/', label: 'Services' },
-  { href: '/about/', label: 'About' },
-];
-
-const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
-const isActive = (href: string) => (href.replace(/\/+$/, '') || '/') === currentPath;
+// Baked in at build time so the admin editor can verify which commit is live.
+const buildCommit = process.env.VERCEL_GIT_COMMIT_SHA ?? 'dev';
+const buildBranch = process.env.VERCEL_GIT_COMMIT_REF ?? 'dev';
 ---
 
 <!DOCTYPE html>
@@ -53,6 +50,9 @@ const isActive = (href: string) => (href.replace(/\/+$/, '') || '/') === current
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
+    <meta name="x-build-commit" content={buildCommit} />
+    <meta name="x-build-branch" content={buildBranch} />
+
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 
     <script is:inline>document.documentElement.classList.add('js');</script>
@@ -63,88 +63,27 @@ const isActive = (href: string) => (href.replace(/\/+$/, '') || '/') === current
     <div class="scroll-progress" aria-hidden="true"></div>
 
     <!-- ═══ NAV ═══════════════════════════ -->
-    <nav class="nav" id="nav">
-      <div class="nav-inner">
-        <a href="/" class="wordmark">
-          <img src="/logo-mark.svg" alt="" class="wordmark-icon" width="32" height="32" />
-          <span class="wordmark-text">
-            <span class="wordmark-word">Acceso AI</span>
-            <span class="wordmark-tagline">AI Consulting</span>
-          </span>
-        </a>
-
-        <ul class="nav-links">
-          {links.map((l) => (
-            <li>
-              <a href={l.href} class={isActive(l.href) ? 'active' : undefined} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
-            </li>
-          ))}
-        </ul>
-
-        <div class="nav-actions">
-          <a href="mailto:Joel@bakerswalkingco.au" class="btn btn-line btn-sm">Contact</a>
-          <a href="https://accesoai.scoreapp.com/" target="_blank" rel="noopener" class="btn btn-ink btn-sm">Take the Assessment</a>
-        </div>
-
-        <button class="burger" id="burger" aria-label="Open menu">
-          <span></span><span></span>
-        </button>
-      </div>
-    </nav>
-
-    <div class="mobile-menu" id="mobile-menu">
-      <button class="mobile-close" id="mobile-close" aria-label="Close menu">&times;</button>
-      {links.map((l) => <a href={l.href}>{l.label}</a>)}
-      <a href="https://accesoai.scoreapp.com/" target="_blank" rel="noopener" class="btn btn-ink" style="margin-top:1.5rem; border-bottom:none; font-family:'Inter',sans-serif; font-size:0.9375rem; align-self:flex-start;">Take the Assessment</a>
-    </div>
+    <!-- Editable content: src/content/partials/header.html -->
+    <Fragment set:html={headerHtml} />
+    <script is:inline data-astro-rerun>
+      // Marks the current page's nav link active (content partial is static HTML).
+      (() => {
+        const current = location.pathname.replace(/\/+$/, '') || '/';
+        document.querySelectorAll('.nav-links a').forEach((a) => {
+          const href = (a.getAttribute('href') || '').replace(/\/+$/, '') || '/';
+          const active = href === current;
+          a.classList.toggle('active', active);
+          if (active) a.setAttribute('aria-current', 'page');
+          else a.removeAttribute('aria-current');
+        });
+      })();
+    </script>
 
     <slot />
 
     <!-- ═══ FOOTER ════════════════════════ -->
-    <footer class="footer">
-      <div class="wrap">
-        <div class="footer-cols">
-          <div>
-            <a href="/" class="wordmark">
-              <img src="/logo-mark.svg" alt="" class="wordmark-icon" width="32" height="32" />
-              <span class="wordmark-text">
-                <span class="wordmark-word">Acceso AI</span>
-                <span class="wordmark-tagline">AI Consulting</span>
-              </span>
-            </a>
-            <p class="footer-desc">
-              Practical AI and automation for Tasmanian small business.
-              Based in Devonport, working across the state.
-            </p>
-          </div>
-          <div>
-            <h4>Navigate</h4>
-            <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/services/">Services</a></li>
-              <li><a href="/about/">About</a></li>
-              <li><a href="/about/#faq">FAQ</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Connect</h4>
-            <ul>
-              <li><a href="https://accesoai.scoreapp.com/" target="_blank" rel="noopener">Take the Assessment</a></li>
-              <li><a href="mailto:Joel@bakerswalkingco.au">Joel@bakerswalkingco.au</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <p class="footer-mark" aria-hidden="true">Acceso AI</p>
-
-      <div class="wrap">
-        <div class="footer-legal">
-          <p>&copy; 2026 Acceso AI. All rights reserved.</p>
-          <p>Devonport, Tasmania</p>
-        </div>
-      </div>
-    </footer>
+    <!-- Editable content: src/content/partials/footer.html -->
+    <Fragment set:html={footerHtml} />
 
     <!-- ═══ MOTION ════════════════════════ -->
     <script>

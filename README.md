@@ -41,3 +41,7 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## Content editing
+
+All visible text and images are editable from the password-protected `/admin` editor. See [docs/content-editor.md](docs/content-editor.md) for how it works and the Vercel environment variables it needs.
