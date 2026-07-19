@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import content from '../content/pages/portfolio.html?raw';
+---
+
+<Base
+  title="Portfolio | Acceso AI"
+  description="Real systems built with AI for Tasmanian organisations, starting with the website that runs the Devonport Table Tennis Association: fixtures, results, ladders, and member logins in one central place."
+  path="/portfolio/"
+>
+  <!-- Editable content: src/content/pages/portfolio.html -->
+  <Fragment set:html={content} />
+</Base>
