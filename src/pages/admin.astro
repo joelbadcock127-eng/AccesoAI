@@ -318,11 +318,11 @@ const authed = isAuthed(Astro.cookies);
             const data = await res.json();
             if (res.ok && data.ok) location.reload();
             else {
-              errBox.textContent = data.error || 'Login failed — try again.';
+              errBox.textContent = data.error || 'Login failed. Try again.';
               errBox.style.display = 'block';
             }
           } catch {
-            errBox.textContent = 'Network error — try again.';
+            errBox.textContent = 'Network error. Try again.';
             errBox.style.display = 'block';
           }
         });
@@ -570,9 +570,9 @@ const authed = isAuthed(Astro.cookies);
             const target = resp.lastCommit;
             const branchWarn =
               resp.servingBranch && resp.servingBranch !== 'dev' && resp.servingBranch !== resp.branch
-                ? `Heads up: this URL serves deployments of "${resp.servingBranch}" but the edit was committed to "${resp.branch}" — it may never appear here.`
+                ? `Heads up: this URL serves deployments of "${resp.servingBranch}" but the edit was committed to "${resp.branch}", so it may never appear here.`
                 : '';
-            setStatus('', 8, `Committed ${short(target)} to ${resp.branch}. Waiting for the build… deploys typically take 1–5 minutes and can queue.`, branchWarn);
+            setStatus('', 8, `Committed ${short(target)} to ${resp.branch}. Waiting for the build… deploys typically take 1 to 5 minutes and can queue.`, branchWarn);
 
             const poll = async () => {
               const elapsed = Math.round((Date.now() - pollStart) / 1000);
@@ -584,7 +584,7 @@ const authed = isAuthed(Astro.cookies);
                 const valuesLive = savedTexts.length > 0 && savedTexts.every((t) => html.includes(encodeForHtml(t)));
                 if ((target && serving === target) || valuesLive) {
                   stopPolling();
-                  setStatus('live', 100, `Live ✓ — your changes are now being served at ${location.origin}${currentRoute} (build ${short(serving || target)}).`, branchWarn);
+                  setStatus('live', 100, `Live ✓ your changes are now being served at ${location.origin}${currentRoute} (build ${short(serving || target)}).`, branchWarn);
                   return;
                 }
                 if (elapsed > 600) {
@@ -596,7 +596,7 @@ const authed = isAuthed(Astro.cookies);
                 const mins = Math.floor(elapsed / 60), secs = elapsed % 60;
                 setStatus('', pct, `Building… currently serving ${short(serving)}, waiting for ${short(target)} · ${mins}m ${String(secs).padStart(2, '0')}s elapsed.`, branchWarn);
               } catch {
-                /* transient network error — keep polling */
+                /* transient network error, keep polling */
               }
             };
             poll();
@@ -617,7 +617,7 @@ const authed = isAuthed(Astro.cookies);
               baseline: f.value,
             }));
             const savedTexts = edits.filter((e) => e.kind === 'text' && e.value.trim().length > 3).map((e) => e.value);
-            setStatus('', 4, 'Saving — committing your edits…', '');
+            setStatus('', 4, 'Saving, committing your edits…', '');
             try {
               const res = await api('/api/admin/save', {
                 method: 'POST',
@@ -637,7 +637,7 @@ const authed = isAuthed(Astro.cookies);
                 setStatus('error', 100, `Saved ${data.applied} change(s), but ${data.skipped.length} could not be applied (content changed underneath). Reload to see the latest content.`, '');
               }
               if (data.mode === 'local') {
-                setStatus('live', 100, `Saved ${data.applied} change(s) to the local content files (dev mode — no commit, no deploy).`, '');
+                setStatus('live', 100, `Saved ${data.applied} change(s) to the local content files (dev mode: no commit, no deploy).`, '');
                 return;
               }
               if (!(data.skipped && data.skipped.length)) {
