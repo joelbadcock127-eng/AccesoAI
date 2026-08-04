@@ -6,9 +6,9 @@ Website: https://www.accesoai.com.au/
 
 ## Pages
 
-- Home: https://www.accesoai.com.au/
+- Home (including About & FAQ): https://www.accesoai.com.au/
 - Services: https://www.accesoai.com.au/services/
-- About & FAQ: https://www.accesoai.com.au/about/
+- Portfolio: https://www.accesoai.com.au/portfolio/
 
 ## Services or Main Topics
 
