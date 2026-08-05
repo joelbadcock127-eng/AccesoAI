@@ -9,9 +9,10 @@ interface Props {
   description: string;
   path: string;
   jsonLd?: Record<string, unknown>;
+  noindex?: boolean;
 }
 
-const { title, description, path, jsonLd } = Astro.props;
+const { title, description, path, jsonLd, noindex = false } = Astro.props;
 
 const siteUrl = 'https://www.accesoai.com.au';
 const canonical = siteUrl + path;
@@ -29,6 +30,7 @@ const buildBranch = process.env.VERCEL_GIT_COMMIT_REF ?? 'dev';
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <title>{title}</title>
     <link rel="canonical" href={canonical} />
 
