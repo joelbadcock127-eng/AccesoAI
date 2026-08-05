@@ -1,0 +1,248 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<!--
+  Table Tennis OS — private demo page for clubs.
+  Deliberately kept out of sitemap.xml, the nav, and search engines (noindex):
+  it's a link Joel shares directly with other clubs.
+-->
+<Base
+  title="Table Tennis OS | Acceso AI"
+  description="The operating software behind Devonport Table Tennis: fixtures, results, live ladders, member logins and a full admin panel, in one website. See the live demo and get it for your club."
+  path="/table-tennis-os/"
+  noindex={true}
+>
+  <!-- ═══ PAGE HERO ═════════════════════ -->
+  <div class="hero-shell">
+    <canvas class="net-canvas" aria-hidden="true"></canvas>
+    <header class="page-hero wrap">
+      <p class="eyebrow hero-fade"><span class="idx">01</span> <span data-scramble="">Table Tennis OS</span></p>
+      <h1 data-split="hero">One website that <em>runs the whole club.</em></h1>
+      <p class="lede hero-fade">
+        Fixtures, results, live ladders, player averages, memberships, member
+        logins and a committee admin panel, all in one place. This is the
+        software that runs Devonport Table Tennis every week, and your club
+        can have it too.
+      </p>
+      <div class="hero-ctas hero-fade">
+        <a href="https://devtt.com.au/" target="_blank" rel="noopener" class="btn btn-ink">
+          See it live at devtt.com.au
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path></svg>
+        </a>
+        <a href="mailto:Joel@bakerswalkingco.au" class="btn btn-line">Talk to us about your club</a>
+      </div>
+    </header>
+  </div>
+
+  <!-- ═══ DEVICES ═══════════════════════ -->
+  <section class="section wrap" style="padding-top: clamp(2rem, 4vw, 3.5rem);">
+    <div class="case-devices rv">
+      <div class="device-laptop">
+        <div class="device-screen">
+          <img src="/table-tennis-os/tt-home.jpg" alt="Table Tennis OS on a laptop: the club homepage showing this week's fixtures for both competition nights" loading="lazy">
+        </div>
+        <div class="device-base"></div>
+      </div>
+      <div class="device-phone">
+        <img src="/table-tennis-os/tt-home-mobile.jpg" alt="The same site on a phone, where most members use it" loading="lazy">
+      </div>
+    </div>
+    <p class="img-caption case-devices-caption">Live right now at devtt.com.au · every screenshot on this page is the real site, captured this week</p>
+
+    <div class="case-body">
+      <p class="rv">
+        Most clubs run a season the same way: the draw in a spreadsheet,
+        results typed up and passed around, ladders recalculated by hand, and
+        the whole thing living in the heads of one or two dedicated
+        volunteers. It works, until that person is away.
+      </p>
+      <p class="rv">
+        Table Tennis OS replaces all of it with one website. The season draw
+        is published once, results are entered once, and everything else, the
+        ladders, the percentages, the player averages, updates on its own.
+        Members check their phone on the way to the clubrooms. The committee
+        runs the competition from a single admin panel.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ WHAT MEMBERS SEE ══════════════ -->
+  <section class="section wrap" id="tour">
+    <p class="eyebrow rv"><span class="idx">02</span> <span data-scramble="">The Tour</span></p>
+    <h2 class="display" data-split="" style="margin-bottom: clamp(2rem, 4vw, 3rem);">
+      What your members <em>see.</em>
+    </h2>
+
+    <div class="shot-grid">
+      <figure class="shot rv">
+        <img src="/table-tennis-os/tt-fixtures.jpg" alt="Fixtures and results page with live ladders for every grade, searchable by player or team" loading="lazy">
+        <figcaption>
+          <strong>Fixtures, results &amp; live ladders.</strong> The full season
+          draw for every night and grade, with ladders and player percentages
+          that update the moment results go in. Searchable by player or team.
+        </figcaption>
+      </figure>
+      <figure class="shot rv">
+        <img src="/table-tennis-os/tt-new-here.jpg" alt="New Here page welcoming first-time players with a free first visit and practice session times" loading="lazy">
+        <figcaption>
+          <strong>A front door for new players.</strong> A dedicated landing
+          page that turns curious locals into members: first hit free, session
+          times, and exactly what to expect on their first night.
+        </figcaption>
+      </figure>
+      <figure class="shot rv">
+        <img src="/table-tennis-os/tt-membership.jpg" alt="Online membership form that takes about two minutes" loading="lazy">
+        <figcaption>
+          <strong>Memberships, online.</strong> New members and renewals
+          through a two-minute form. The treasurer gets the details, the
+          member gets an invoice and a login. No paper forms.
+        </figcaption>
+      </figure>
+      <figure class="shot rv">
+        <img src="/table-tennis-os/tt-learn.jpg" alt="Learn page with coach profiles and technique videos" loading="lazy">
+        <figcaption>
+          <strong>Coaching &amp; learning.</strong> Coach profiles, session
+          times and hand-picked technique videos, so improving isn't limited
+          to one night a week.
+        </figcaption>
+      </figure>
+      <figure class="shot rv">
+        <img src="/table-tennis-os/tt-contact.jpg" alt="Contact page with the clubrooms address and a simple message form" loading="lazy">
+        <figcaption>
+          <strong>Contact &amp; club info.</strong> One obvious place for
+          session times, the clubrooms address and a message form that goes
+          straight to the committee.
+        </figcaption>
+      </figure>
+      <figure class="shot rv">
+        <img src="/table-tennis-os/tt-login.jpg" alt="Member login page for the members-only area" loading="lazy">
+        <figcaption>
+          <strong>Member logins.</strong> Behind the login, members get their
+          own dashboard: their upcoming matches, their results and averages,
+          club events they can sign up to, and their availability for the
+          season. The committee gets a full admin panel: results upload,
+          announcements, events, memberships and more.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ═══ BEFORE / AFTER ════════════════ -->
+  <section class="section wrap">
+    <p class="eyebrow rv"><span class="idx">03</span> <span data-scramble="">The Change</span></p>
+    <h2 class="display" data-split="" style="margin-bottom: clamp(2rem, 4vw, 3rem);">
+      From spreadsheets to <em>one system.</em>
+    </h2>
+
+    <div class="outcome rv">
+      <div class="outcome-grid">
+        <div class="outcome-side before">
+          <p class="outcome-label">Before</p>
+          <ul class="outcome-list">
+            <li>Season draw kept in spreadsheets and printouts</li>
+            <li>Results typed up and passed around by hand</li>
+            <li>Ladders and averages recalculated manually each week</li>
+            <li>Paper membership forms chased up every season</li>
+            <li>Everything dependent on one or two volunteers</li>
+          </ul>
+        </div>
+        <div class="outcome-side after">
+          <p class="outcome-label">After</p>
+          <ul class="outcome-list">
+            <li>Fixtures, results and ladders live on one website</li>
+            <li>Results entered once, everything updates instantly</li>
+            <li>Members join and renew online, and log in to their own dashboard</li>
+            <li>The committee runs the whole competition from one admin panel</li>
+            <li>The club's history stays with the club, not in someone's head</li>
+          </ul>
+        </div>
+      </div>
+      <div class="outcome-result">
+        <span class="k">The Result</span>
+        <span class="v">A volunteer committee runs a full pennant season without the paperwork.</span>
+      </div>
+    </div>
+
+    <ul class="about-facts rv" style="margin-top: 2rem;">
+      <li>Fixtures &amp; results</li>
+      <li>Live ladders</li>
+      <li>Player averages</li>
+      <li>Online memberships</li>
+      <li>Member dashboards</li>
+      <li>Events &amp; announcements</li>
+      <li>Committee admin panel</li>
+      <li>Built with AI</li>
+    </ul>
+  </section>
+
+  <!-- ═══ FOR YOUR CLUB ═════════════════ -->
+  <section class="section wrap">
+    <p class="eyebrow rv"><span class="idx">04</span> <span data-scramble="">Your Club</span></p>
+    <h2 class="display" data-split="" style="margin-bottom: clamp(2rem, 4vw, 3rem);">
+      Set up for <em>your club.</em>
+    </h2>
+    <div class="case-body">
+      <p class="rv">
+        Table Tennis OS isn't a template you squeeze your competition into.
+        It was built around how a local pennant season actually works, nights,
+        grades, byes, percentages, finals, and it gets set up around yours:
+        your name, your colours, your grades, your roster, on your own web
+        address.
+      </p>
+      <p class="rv">
+        Because it's built and run with AI, it costs what a volunteer
+        committee can actually say yes to, not what league-management software
+        usually costs. Have a click around the live site first, then get in
+        touch and we'll talk through what it would look like for your club.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ FINALE ════════════════════════ -->
+  <section class="finale section" id="contact">
+    <div class="wrap">
+      <p class="eyebrow rv"><span data-scramble="">Get Started</span></p>
+      <h2 data-split="">Want this for <em>your club?</em></h2>
+      <p class="lede rv">Explore the live site at devtt.com.au, then tell us about your club. We'll show you exactly what your version would look like.</p>
+      <div class="finale-ctas rv">
+        <a href="https://devtt.com.au/" target="_blank" rel="noopener" class="btn btn-paper">
+          See the live demo
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path></svg>
+        </a>
+        <a href="mailto:Joel@bakerswalkingco.au" class="btn btn-ghost-dark">Contact Acceso AI</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .shot-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  @media (max-width: 760px) {
+    .shot-grid { grid-template-columns: 1fr; }
+  }
+  .shot {
+    margin: 0;
+  }
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    box-shadow: 0 18px 40px -22px rgba(15, 23, 42, 0.35);
+  }
+  .shot figcaption {
+    margin-top: 0.9rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--muted, #55607a);
+  }
+  .shot figcaption strong {
+    color: var(--ink, #101828);
+  }
+</style>
